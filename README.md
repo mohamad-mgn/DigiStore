@@ -92,35 +92,29 @@ DigiStore/
 
 ### 1️⃣ Clone the repository
     
-    ```bash
     git clone https://github.com/mohamad-mgn/DigiStore.git
     cd DigiStore
 
 ### 2️⃣ Create Virtual Environment
     
-    ```bash
     python3 -m venv venv
     source venv/bin/activate
 
 ### 3️⃣ Install Dependencies
     
-    ```bash
     pip install -r requirements.txt
 
 ### 4️⃣ Apply Migrations
     
-    ```bash
     python manage.py makemigrations
     python manage.py migrate
 
 ### 5️⃣ Create Superuser
     
-    ```bash
     python manage.py createsuperuser
 
 ### 6️⃣ Run Development Server
-    
-    ```bash
+
     python manage.py runserver
 
 ⸻
