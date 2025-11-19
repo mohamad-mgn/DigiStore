@@ -56,6 +56,7 @@ It includes a powerful product system, shopping cart, payments, seller dashboard
 ## 📁 Project Structure
 
 DigiStore/
+
 │
 ├── digistore/
 │   ├── settings.py
