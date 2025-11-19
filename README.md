@@ -54,38 +54,38 @@ It includes a powerful product system, shopping cart, payments, seller dashboard
 ⸻
 
 ## 📁 Project Structure
-
-DigiStore/
-
-│
-├── digistore/
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-│
-├── apps/
-│   ├── account/     # OTP auth, login, signup
-│   ├── home/        # Homepage, about
-│   ├── product/     # Products & categories
-│   ├── store/       # Seller stores
-│   ├── cart/        # Shopping cart
-│   ├── orders/      # Orders, checkout
-│   ├── payments/    # Mock payments
-│   └── dashboard/   # Seller & customer dashboards
-│
-├── templates/
-│   ├── base.html
-│   ├── home/
-│   ├── product/
-│   ├── dashboard/
-│   └── includes/
-│
-├── static/
-│   ├── css/style.css
-│   ├── images/logo.png
-│   └── images/banner.png
-│
-└── manage.py
+    
+    ```text
+    DigiStore/
+    │
+    ├── digistore/
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    │
+    ├── apps/
+    │   ├── account/     # OTP auth, login, signup
+    │   ├── home/        # Homepage, about
+    │   ├── product/     # Products & categories
+    │   ├── store/       # Seller stores
+    │   ├── cart/        # Shopping cart
+    │   ├── orders/      # Orders, checkout
+    │   ├── payments/    # Mock payments
+    │   └── dashboard/   # Seller & customer dashboards
+    │
+    ├── templates/
+    │   ├── base.html
+    │   ├── home/
+    │   ├── product/
+    │   ├── dashboard/
+    │   └── includes/
+    │
+    ├── static/
+    │   ├── css/style.css
+    │   ├── images/logo.png
+    │   └── images/banner.png
+    │
+    └── manage.py
 
 ⸻
 
