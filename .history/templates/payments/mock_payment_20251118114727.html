@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}صفحه پرداخت (شبیه‌سازی){% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5>پرداخت سفارش #{{ payment.order.id }}</h5>
+        <p>مبلغ: <strong>{{ payment.amount|intcomma }} تومان</strong></p>
+
+        <form method="post">
+          {% csrf_token %}
+          <button name="action" value="success" class="btn btn-success">موفق</button>
+          <button name="action" value="fail" class="btn btn-danger">ناموفق</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

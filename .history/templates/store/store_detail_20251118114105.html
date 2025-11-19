@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}فروشگاه — {{ store.store_name }}{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <h3>{{ store.store_name }}</h3>
+    <p>{{ store.description }}</p>
+    <hr>
+    <h5>محصولات فروشگاه</h5>
+    <div class="row">
+      {% for p in store.products.all %}
+        <div class="col-md-6 col-lg-4 mb-3">
+          <div class="card">
+            <img src="{{ p.image.url if p.image else static('images/placeholder.png') }}" class="card-img-top" style="height:140px; object-fit:cover;">
+            <div class="card-body">
+              <h6>{{ p.title }}</h6>
+              <p class="small text-muted">{{ p.price|intcomma }} تومان</p>
+              <a href="{{ p.get_absolute_url }}" class="btn btn-sm btn-outline-primary">مشاهده</a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-12">بدون محصول</div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-3">
+      <p>فروشنده: {{ store.seller.full_name|default:store.seller.phone }}</p>
+      {% if request.user == store.seller %}
+        <a class="btn btn-sm btn-primary" href="{% url 'store:edit' %}">ویرایش فروشگاه</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

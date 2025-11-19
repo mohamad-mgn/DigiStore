@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}سفارش #{{ order.id }}{% endblock %}
+{% block content %}
+<h4>سفارش #{{ order.id }}</h4>
+<p>وضعیت: {{ order.get_status_display }}</p>
+<table class="table">
+  <thead><tr><th>محصول</th><th>قیمت</th><th>تعداد</th><th>جمع</th></tr></thead>
+  <tbody>
+    {% for it in order.items.all %}
+    <tr>
+      <td>{{ it.product.title }}</td>
+      <td>{{ it.unit_price|intcomma }} تومان</td>
+      <td>{{ it.quantity }}</td>
+      <td>{{ it.total_price|intcomma }} تومان</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p>مجموع: <strong>{{ order.total_amount|intcomma }} تومان</strong></p>
+{% endblock %}

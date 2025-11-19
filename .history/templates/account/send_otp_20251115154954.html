@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}ورود / ثبت‌نام{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 450px;">
+    <h3 class="mb-4 text-center">ورود / ثبت‌نام</h3>
+
+    <form method="post" class="card p-4 shadow-sm">
+        {% csrf_token %}
+
+        <label class="form-label">شماره موبایل</label>
+        {{ form.phone }}
+        <div class="text-danger small">{{ form.phone.errors }}</div>
+
+        <button class="btn btn-primary w-100 mt-3">ارسال کد تأیید</button>
+    </form>
+</div>
+{% endblock %}

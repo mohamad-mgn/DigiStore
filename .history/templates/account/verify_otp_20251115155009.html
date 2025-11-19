@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}تأیید کد{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 450px;">
+    <h3 class="text-center mb-3">تأیید کد پیامکی</h3>
+
+    <form method="post" class="card p-4 shadow-sm">
+        {% csrf_token %}
+
+        <p class="mb-3">
+            کد ارسال‌شده به
+            <strong>{{ phone }}</strong>
+            را وارد کنید.
+        </p>
+
+        {{ form.phone }}
+        <label class="form-label">کد تأیید</label>
+        {{ form.code }}
+        <div class="text-danger small">{{ form.code.errors }}</div>
+
+        <button class="btn btn-success w-100 mt-3">تأیید</button>
+    </form>
+</div>
+{% endblock %}

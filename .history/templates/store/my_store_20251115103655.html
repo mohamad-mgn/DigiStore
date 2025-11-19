@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>فروشگاه‌های من</h2>
+<a href="{% url 'store:store_create' %}">ایجاد فروشگاه جدید</a>
+<ul>
+  {% for s in stores %}
+    <li><a href="{% url 'store:store_detail' s.slug %}">{{ s.name }}</a></li>
+  {% empty %}
+    <li>هنوز فروشگاهی ایجاد نکرده‌اید.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

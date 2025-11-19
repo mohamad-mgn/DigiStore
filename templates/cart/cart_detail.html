@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}سبد خرید{% endblock %}
+{% block content %}
+<h4>سبد خرید</h4>
+{% if cart.items.count %}
+  <table class="table">
+    <thead><tr><th>محصول</th><th>قیمت</th><th>تعداد</th><th>جمع</th><th></th></tr></thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td><a href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a></td>
+        <td>{{ item.unit_price|default:item.product.price|intcomma }} تومان</td>
+        <td>
+          <form method="post" action="{% url 'cart:update' item.id %}">
+            {% csrf_token %}
+            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control d-inline-block" style="width:90px;">
+            <button class="btn btn-sm btn-primary">بروزرسانی</button>
+          </form>
+        </td>
+        <td>{{ item.total_price|intcomma }} تومان</td>
+        <td>
+          <form method="post" action="{% url 'cart:remove' item.id %}">{% csrf_token %}<button class="btn btn-sm btn-danger">حذف</button></form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between">
+    <div>جمع کل: <strong>{{ cart.total_price|intcomma }} تومان</strong></div>
+    <div>
+      <form method="post" action="{% url 'cart:clear' %}">{% csrf_token %}<button class="btn btn-outline-danger">خالی کردن</button></form>
+      <a class="btn btn-success" href="{% url 'orders:checkout' %}">نهایی کردن سفارش</a>
+    </div>
+  </div>
+
+{% else %}
+  <div class="alert alert-info">سبد خرید شما خالی است.</div>
+{% endif %}
+{% endblock %}
