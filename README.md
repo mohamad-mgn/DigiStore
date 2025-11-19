@@ -165,8 +165,7 @@ Flow:
 ## 📸 Screenshots (Optional)
 
 You can add images like this:
-    
-    ```bash
+
     ![Home Page](static/images/banner.png)
     ![Navbar](static/images/logo.png)
 
