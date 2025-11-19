@@ -1,4 +1,4 @@
-🚀 DigiStore
+# 🚀 DigiStore
 
 Modern E-Commerce Web Application (Laptops, Mobiles, Tablets)
 
@@ -7,34 +7,34 @@ It includes a powerful product system, shopping cart, payments, seller dashboard
 
 ⸻
 
-📌 Features
+## 📌 Features
 
-🛍️ Core Features
+### 🛍️ Core Features
 	•	Product listing & filtering (by category)
 	•	Product detail pages with stock control
 	•	Store (seller) system
 	•	Customer dashboard
 	•	Seller dashboard (products, orders, revenue summary)
 
-🛒 Cart & Orders
+### 🛒 Cart & Orders
 	•	Add / remove items from cart
 	•	Checkout page
 	•	Order creation with stock validation
 	•	Orders list & detailed view
 	•	Seller order management
 
-💳 Payments
+### 💳 Payments
 	•	Mock payment gateway
 	•	Simulated success/fail callbacks
 	•	Each order has a connected Payment model
 
-🔐 Authentication
+### 🔐 Authentication
 	•	Login / Signup with phone number + OTP
 	•	No username/email required
 	•	Session-based secure login
 	•	Separate dashboards: customer vs seller
 
-🖥️ UI / Frontend
+### 🖥️ UI / Frontend
 	•	Fully responsive (Bootstrap 5)
 	•	Modern black navbar
 	•	Home hero banner
@@ -42,7 +42,7 @@ It includes a powerful product system, shopping cart, payments, seller dashboard
 	•	RTL (Persian) support
 	•	Custom CSS & IranSans font integration
 
-🗂️ Tech Stack
+### 🗂️ Tech Stack
 	•	Django 5
 	•	Python 3.12
 	•	Bootstrap 5.3
@@ -53,7 +53,7 @@ It includes a powerful product system, shopping cart, payments, seller dashboard
 
 ⸻
 
-📁 Project Structure
+## 📁 Project Structure
 
 DigiStore/
 │
@@ -88,44 +88,44 @@ DigiStore/
 
 ⸻
 
-⚙️ Installation & Setup
+## ⚙️ Installation & Setup
 
-1️⃣ Clone the Repository:
-
+### 1️⃣ Clone the repository
+    
     ```bash
-    git clone https://github.com/<YOUR_USERNAME>/DigiStore.git
+    git clone https://github.com/mohamad-mgn/DigiStore.git
     cd DigiStore
 
-2️⃣ Create Virtual Environment
-
+### 2️⃣ Create Virtual Environment
+    
     ```bash
     python3 -m venv venv
     source venv/bin/activate
 
-3️⃣ Install Dependencies
-
+### 3️⃣ Install Dependencies
+    
     ```bash
     pip install -r requirements.txt
 
-4️⃣ Apply Migrations
-
-  ```bash
+### 4️⃣ Apply Migrations
+    
+    ```bash
     python manage.py makemigrations
     python manage.py migrate
 
-5️⃣ Create Superuser
-
-  ```bash
+### 5️⃣ Create Superuser
+    
+    ```bash
     python manage.py createsuperuser
 
-6️⃣ Run Development Server
-
-  ```bash
+### 6️⃣ Run Development Server
+    
+    ```bash
     python manage.py runserver
 
 ⸻
 
-🧪 Testing Login & OTP
+## 🧪 Testing Login & OTP
 
 The project uses phone-based OTP authentication.
 
@@ -136,7 +136,7 @@ Flow:
 
 ⸻
 
-🧾 URL Structure
+## 🧾 URL Structure
 
 | Section              | URL                      |
 |----------------------|--------------------------|
@@ -152,7 +152,7 @@ Flow:
 
 ⸻
 
-🛠️ Future Improvements
+## 🛠️ Future Improvements
 	•	Real payment gateway (ZarinPal / Stripe)
 	•	Product reviews & ratings
 	•	Coupon system
@@ -162,24 +162,24 @@ Flow:
 
 ⸻
 
-📸 Screenshots (Optional)
+## 📸 Screenshots (Optional)
 
 You can add images like this:
-
+    
     ```bash
     ![Home Page](static/images/banner.png)
     ![Navbar](static/images/logo.png)
 
 ⸻
 
-🧑‍💻 Author
+## 🧑‍💻 Author
 
 Mohammad Moghanloo
 DigiStore Project — 2025
 
 ⸻
 
-⭐ Contribution
+## ⭐ Contribution
 
 Pull requests are welcome.
 If you like this project, please give it a star ⭐ on GitHub!
