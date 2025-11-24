@@ -1,4 +1,5 @@
 from apps.cart.models import Cart
+from apps.cart.utils import get_or_create_cart
 from apps.store.models import Store
 
 def global_context(request):
@@ -32,4 +33,13 @@ def global_context(request):
         "is_seller": is_seller,
         "store_exists": store_exists,
         "user_name": user_name,
+    }
+
+
+def global_context(request):
+    cart = get_or_create_cart(request)
+    cart_count = cart.items.count() if cart else 0
+
+    return {
+        "cart_count": cart_count
     }

@@ -2,14 +2,16 @@ from django.db import models
 from apps.user.models import User
 from apps.product.models import Product
 
-
 class Cart(models.Model):
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="cart",
-        verbose_name="کاربر"
+        null=True,
+        blank=True,
+        related_name="cart"
     )
+    session_key = models.CharField(max_length=40, null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -17,32 +19,25 @@ class Cart(models.Model):
         verbose_name_plural = "سبدهای خرید"
 
     def __str__(self):
-        return f"سبد خرید {self.user.phone}"
+        if self.user:
+            return f"سبد خرید {self.user.phone}"
+        return f"سبد خرید مهمان ({self.session_key})"
 
     @property
     def total_price(self):
-        # مجموع کل قیمت
         return sum(item.total_price for item in self.items.all())
-
 
 
 class CartItem(models.Model):
     cart = models.ForeignKey(
         Cart,
         on_delete=models.CASCADE,
-        related_name="items",
-        verbose_name="سبد خرید"
+        related_name="items"
     )
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE,
-        verbose_name="محصول"
-    )
-    quantity = models.PositiveIntegerField("تعداد", default=1)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
-        verbose_name = "آیتم سبد خرید"
-        verbose_name_plural = "آیتم‌های سبد خرید"
         unique_together = ('cart', 'product')
 
     def __str__(self):
