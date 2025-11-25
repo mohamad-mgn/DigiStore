@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product
+from .models import Product, Category
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -16,7 +16,13 @@ class ProductForm(forms.ModelForm):
         widgets = {
             "description": forms.Textarea(attrs={"rows": 3}),
         }
+        
+    VALID_CATEGORIES = ["laptop", "mobile", "tablet"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["category"].queryset = Category.objects.filter(slug__in=self.VALID_CATEGORIES)
+        
     def clean_price(self):
         price = self.cleaned_data.get("price")
         if not isinstance(price, int) or price <= 0:

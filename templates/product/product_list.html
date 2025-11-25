@@ -6,70 +6,90 @@
 
 {% block content %}
 
-<!-- ⭐ عنوان + بنر کوچک -->
-<div class="mb-4 p-3 bg-dark text-white rounded d-flex justify-content-between align-items-center">
-    <h4 class="mb-0 fw-bold">محصولات</h4>
-</div>
-
 <div class="row">
 
-    <!-- ⭐ ستون فیلتر و دسته‌بندی -->
+    <!-- سایدبار دسته‌بندی -->
     <div class="col-lg-3 mb-4">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm border-0" style="border-radius:14px;">
             <div class="card-body">
-                <h6 class="fw-bold mb-3">دسته‌بندی‌ها</h6>
-                <ul class="list-unstyled mb-0">
+
+                <h5 class="fw-bold mb-3 text-primary">دسته‌بندی‌ها</h5>
+
+                <div class="list-group">
+
+                    <!-- لینک همه -->
+                    <a href="{% url 'product:list' %}"
+                       class="list-group-item list-group-item-action {% if not current_category %}active{% endif %}"
+                       style="border-radius:10px;">
+                        همه محصولات
+                    </a>
+
                     {% for c in categories %}
-                        <li class="mb-2">
-                            <a href="{% url 'product:list' %}?category={{ c.id }}" class="text-dark">
-                                {{ c.name }}
-                            </a>
-                        </li>
-                    {% empty %}
-                        <li class="text-muted">دسته‌ای وجود ندارد</li>
+                        <a href="{% url 'product:category' c.slug %}"
+                           class="list-group-item list-group-item-action {% if current_category and current_category.id == c.id %}active{% endif %}"
+                           style="border-radius:10px;">
+                            {{ c.name }}
+                        </a>
                     {% endfor %}
-                </ul>
+
+                </div>
+
             </div>
         </div>
     </div>
 
-
-    <!-- ⭐ لیست محصولات -->
+    <!-- لیست محصولات -->
     <div class="col-lg-9">
+
+        <!-- عنوان بخش -->
+        <div class="mb-4 p-3 rounded"
+             style="background: var(--navy); color:white; box-shadow: var(--shadow-1); border-radius:14px;">
+            <h4 class="fw-bold mb-0">محصولات</h4>
+        </div>
+
+        <!-- گرید محصولات -->
         <div class="row">
 
             {% for p in products %}
             <div class="col-sm-6 col-lg-4 mb-4">
-                <div class="product-card shadow-sm">
+                <div class="product-card">
 
-                    <!-- تصویر محصول -->
+                    <!-- تصویر -->
                     {% if p.image %}
                         <img src="{{ p.image.url }}" class="product-img">
                     {% else %}
                         <img src="{% static 'images/placeholder.png' %}" class="product-img">
                     {% endif %}
 
-                    <!-- اطلاعات محصول -->
                     <div class="p-3">
+
+                        <!-- عنوان -->
                         <h6 class="fw-bold mb-1">{{ p.title }}</h6>
 
+                        <!-- نام فروشگاه -->
                         {% if p.store %}
-                        <p class="text-muted small mb-2">{{ p.store.store_name }}</p>
+                        <p class="text-muted small mb-2">
+                            {{ p.store.store_name }}
+                        </p>
                         {% endif %}
 
+                        <!-- قیمت و دکمه -->
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="{{ p.get_absolute_url }}" class="btn btn-sm btn-outline-primary">مشاهده</a>
+                            <a href="{{ p.get_absolute_url }}"
+                               class="btn btn-sm btn-outline-primary">مشاهده</a>
+
                             <span class="fw-bold">{{ p.price|intcomma }} تومان</span>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
             {% empty %}
-                <p class="text-muted">هیچ محصولی پیدا نشد.</p>
+                <p class="text-muted">هیچ محصولی یافت نشد.</p>
             {% endfor %}
 
         </div>
+
     </div>
 
 </div>
