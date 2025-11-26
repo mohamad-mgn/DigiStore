@@ -1,26 +1,16 @@
-# from django.contrib import admin
-# from .models import Order, OrderItem
-
-
-# class OrderItemInline(admin.TabularInline):
-#     model = OrderItem
-#     readonly_fields = ('product', 'unit_price', 'quantity')
-#     extra = 0
-
-
-# @admin.register(Order)
-# class OrderAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'user', 'status', 'total_amount', 'created_at')
-#     list_filter = ('status',)
-#     search_fields = ('user__phone', 'id')
-#     inlines = [OrderItemInline]
-
-
 from django.apps import AppConfig
 
+# --------------------------------------------------------
+# Orders App Configuration
+# --------------------------------------------------------
 class OrdersConfig(AppConfig):
+    """
+    Configuration class for the 'orders' app.
+    Sets default auto field type and app label.
+    """
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'apps.orders'
 
+    # Uncomment the ready method if you need to register signals
     # def ready(self):
     #     import apps.orders.signals

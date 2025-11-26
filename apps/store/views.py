@@ -8,14 +8,14 @@ from .forms import StoreForm
 
 
 class SellerRequiredMixin(UserPassesTestMixin):
-    """فقط کاربرانی که فروشنده هستند اجازه ساخت/ویرایش دارند"""
+    """Only users who are sellers are allowed to create/edit"""
 
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_seller
 
 
 # --------------------------
-#   لیست همه فروشگاه‌ها
+#   List all stores
 # --------------------------
 
 class StoreListView(ListView):
@@ -26,7 +26,7 @@ class StoreListView(ListView):
 
 
 # --------------------------
-#   صفحه جزئیات فروشگاه
+#   Store detail page
 # --------------------------
 
 class StoreDetailView(DetailView):
@@ -36,7 +36,7 @@ class StoreDetailView(DetailView):
 
 
 # --------------------------
-#   ایجاد فروشگاه
+#   Create a new store
 # --------------------------
 
 class StoreCreateView(LoginRequiredMixin, SellerRequiredMixin, CreateView):
@@ -50,6 +50,10 @@ class StoreCreateView(LoginRequiredMixin, SellerRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+# --------------------------
+#   Update a store
+# --------------------------
+
 class StoreUpdateView(LoginRequiredMixin, SellerRequiredMixin, UpdateView):
     model = Store
     form_class = StoreForm
@@ -57,8 +61,13 @@ class StoreUpdateView(LoginRequiredMixin, SellerRequiredMixin, UpdateView):
     success_url = reverse_lazy("store:list")
 
     def get_queryset(self):
+        # Only allow the seller to update their own store
         return Store.objects.filter(seller=self.request.user)
 
+
+# --------------------------
+#   Delete a store
+# --------------------------
 
 class StoreDeleteView(LoginRequiredMixin, SellerRequiredMixin, DeleteView):
     model = Store
@@ -66,4 +75,5 @@ class StoreDeleteView(LoginRequiredMixin, SellerRequiredMixin, DeleteView):
     success_url = reverse_lazy("store:list")
 
     def get_queryset(self):
+        # Only allow the seller to delete their own store
         return Store.objects.filter(seller=self.request.user)

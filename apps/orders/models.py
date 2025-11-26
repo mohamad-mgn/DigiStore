@@ -3,8 +3,16 @@ from django.utils import timezone
 from django.conf import settings
 from apps.product.models import Product
 
-
+# --------------------------------------------------------
+# Order model
+# --------------------------------------------------------
 class Order(models.Model):
+    """
+    Represents a customer's order.
+    Tracks status, total amount, delivery info, and timestamps.
+    """
+
+    # Choices for order status
     STATUS_CHOICES = [
         ('pending', 'در انتظار پرداخت'),
         ('paid', 'پرداخت شده'),
@@ -43,10 +51,17 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.id} - {self.user.phone}"
-    
 
 
+# --------------------------------------------------------
+# OrderItem model
+# --------------------------------------------------------
 class OrderItem(models.Model):
+    """
+    Represents a single product item within an order.
+    Tracks product, quantity, unit price, and calculates total price.
+    """
+
     order = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
@@ -73,4 +88,7 @@ class OrderItem(models.Model):
 
     @property
     def total_price(self):
+        """
+        Returns the total price for this item (unit_price * quantity).
+        """
         return self.unit_price * self.quantity

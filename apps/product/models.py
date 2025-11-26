@@ -3,9 +3,12 @@ from django.utils.text import slugify
 from django.urls import reverse
 from apps.store.models import Store
 
+# =========================
+#   Category Model
+# =========================
 class Category(models.Model):
     name = models.CharField("نام دسته", max_length=120)
-    slug = models.SlugField("شناسه", unique=True, blank=True)
+    slug = models.SlugField("شناسه", unique=True, blank=True)  # auto-generated if blank
 
     class Meta:
         verbose_name = "دسته‌بندی"
@@ -16,10 +19,13 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            from django.utils.text import slugify
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+
+# =========================
+#   Product Model
+# =========================
 class Product(models.Model):
     store = models.ForeignKey(
         Store,
@@ -57,5 +63,6 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    # URL for the product detail page
     def get_absolute_url(self):
         return reverse("product:detail", args=[str(self.id)])

@@ -6,6 +6,7 @@ from .models import Product, Category
 from .forms import ProductForm
 from apps.store.models import Store
 
+
 class ProductListView(ListView):
     model = Product
     template_name = "product/product_list.html"
@@ -15,12 +16,12 @@ class ProductListView(ListView):
     def get_queryset(self):
         qs = Product.objects.select_related("store", "category").all()
 
-        # فیلتر نام محصول
+        # Filter by product title (search query)
         q = self.request.GET.get("q")
         if q:
             qs = qs.filter(title__icontains=q)
 
-        # فیلتر دسته‌بندی با slug
+        # Filter by category slug
         slug = self.kwargs.get("slug")
         if slug:
             qs = qs.filter(category__slug=slug)
@@ -38,54 +39,68 @@ class ProductListView(ListView):
 
         return ctx
 
+
 class ProductCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = "product/product_create.html"
 
+    # Ensure that only authenticated sellers can create products
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_seller
 
+    # Automatically assign the product to the current seller's store
     def form_valid(self, form):
         store = get_object_or_404(Store, seller=self.request.user)
         form.instance.store = store
         return super().form_valid(form)
 
+    # Redirect to the product detail page after successful creation
     def get_success_url(self):
         return self.object.get_absolute_url()
+
 
 class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = "product/product_update.html"
 
+    # Ensure that only authenticated sellers can update products
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_seller
 
+    # Limit queryset to products owned by the current seller
     def get_queryset(self):
         return Product.objects.filter(store__seller=self.request.user).select_related("category")
 
+    # Redirect to the product detail page after successful update
     def get_success_url(self):
         return self.object.get_absolute_url()
+
 
 class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = "product/product_delete.html"
 
+    # Ensure that only authenticated sellers can delete products
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_seller
 
+    # Limit queryset to products owned by the current seller
     def get_queryset(self):
         return Product.objects.filter(store__seller=self.request.user)
     
+    # Redirect to the product list page after deletion
     def get_success_url(self):
         return reverse_lazy("product:list")
+
 
 class ProductDetailView(DetailView):
     model = Product
     template_name = "product/product_detail.html"
     context_object_name = "product"
 
+    # Add related products to the context (same category, excluding current product)
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["related_products"] = Product.objects.filter(

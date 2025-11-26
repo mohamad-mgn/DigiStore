@@ -5,4 +5,5 @@ class ProductConfig(AppConfig):
     name = 'apps.product'
 
     def ready(self):
+        # Import signals to connect signal handlers when app is ready
         import apps.product.signals

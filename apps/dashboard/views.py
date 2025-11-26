@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 
@@ -6,23 +6,28 @@ from apps.orders.models import Order, OrderItem
 from apps.product.models import Product
 from apps.store.models import Store
 
-
 # ============================
-#   داشبورد خریدار
+#   Customer Dashboard
 # ============================
 
 class CustomerDashboardView(LoginRequiredMixin, TemplateView):
+    """
+    Dashboard view for customers.
+    Displays the latest 10 orders of the logged-in customer.
+    Redirects to seller dashboard if a seller tries to access this page.
+    """
     template_name = "dashboard/customer_dashboard.html"
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_seller:
-            return redirect("dashboard:seller")
+            return redirect("dashboard:seller")  # Prevent sellers from accessing customer dashboard
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         user = self.request.user
 
+        # Fetch last 10 orders of the customer
         ctx["orders"] = (
             Order.objects
             .filter(user=user)
@@ -33,30 +38,39 @@ class CustomerDashboardView(LoginRequiredMixin, TemplateView):
 
 
 # ============================
-#   داشبورد فروشنده
+#   Seller Dashboard
 # ============================
 
 class SellerDashboardView(LoginRequiredMixin, TemplateView):
+    """
+    Dashboard view for sellers.
+    Displays seller's store, products, and recent orders related to their products.
+    Redirects to customer dashboard if a non-seller tries to access this page.
+    """
     template_name = "dashboard/seller_dashboard.html"
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_seller:
-            return redirect("dashboard:customer")
+            return redirect("dashboard:customer")  # Prevent customers from accessing seller dashboard
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         user = self.request.user
 
+        # Fetch the seller's store
         store = Store.objects.filter(seller=user).first()
         ctx["store"] = store
 
         if store:
+            # Fetch products belonging to this store
             ctx["products"] = (
                 store.products
                 .select_related("category")
                 .order_by("-id")
             )
+
+            # Fetch last 10 order items related to this store's products
             ctx["orders"] = (
                 OrderItem.objects
                 .filter(product__store=store)

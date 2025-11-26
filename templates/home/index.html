@@ -54,24 +54,39 @@
     </div>
 
     <!-- دسته‌بندی‌ها -->
-    <div class="col-lg-3">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h6 class="fw-bold mb-3">دسته‌بندی‌ها</h6>
-                <ul class="list-unstyled">
-                    {% for c in categories %}
-                    <li>
-                        <a class="text-dark"
-                           href="{% url 'product:list' %}?category={{ c.id }}">
-                            {{ c.name }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+<div class="col-lg-3">
+    <div class="card shadow-sm border-0" style="border-radius:14px;">
+        <div class="card-body">
+
+            <h6 class="fw-bold mb-3">دسته‌بندی محصولات</h6>
+
+            <ul class="list-unstyled">
+
+                {% for c in categories %}
+                <li>
+                    <a href="{% url 'product:category' c.slug %}"
+                       class="d-flex align-items-center gap-2 p-2 mb-2 rounded
+                              text-dark text-decoration-none category-item">
+
+                        <!-- آیکن دسته‌بندی -->
+                        {% if c.slug == 'laptop' %}
+                            <i class="bi bi-laptop fs-4 text-primary"></i>
+                        {% elif c.slug == 'mobile' %}
+                            <i class="bi bi-phone fs-4 text-primary"></i>
+                        {% elif c.slug == 'tablet' %}
+                            <i class="bi bi-tablet fs-4 text-primary"></i>
+                        {% else %}
+                            <i class="bi bi-grid fs-4 text-primary"></i>
+                        {% endif %}
+
+                        <span class="fw-bold">{{ c.name }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+
         </div>
     </div>
-
 </div>
-
 {% endblock %}

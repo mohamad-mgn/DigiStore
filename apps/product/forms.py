@@ -16,21 +16,25 @@ class ProductForm(forms.ModelForm):
         widgets = {
             "description": forms.Textarea(attrs={"rows": 3}),
         }
-        
+
+    # Valid categories allowed for this form
     VALID_CATEGORIES = ["laptop", "mobile", "tablet"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Limit category choices to valid ones
         self.fields["category"].queryset = Category.objects.filter(slug__in=self.VALID_CATEGORIES)
-        
+
     def clean_price(self):
         price = self.cleaned_data.get("price")
+        # Ensure price is a positive integer
         if not isinstance(price, int) or price <= 0:
             raise forms.ValidationError("قیمت باید عدد صحیح مثبت و بزرگتر از صفر باشد.")
         return price
 
     def clean_stock(self):
         stock = self.cleaned_data.get("stock")
+        # Ensure stock is non-negative
         if stock < 0:
             raise forms.ValidationError("موجودی نمی‌تواند منفی باشد.")
         return stock

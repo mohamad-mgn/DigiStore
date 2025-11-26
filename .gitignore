@@ -10,7 +10,7 @@ __pycache__/
 *.sqlite3
 *.db
 
-# Virtual env
+# Virtual environment
 .venv/
 venv/
 
@@ -21,7 +21,7 @@ venv/
 .idea/
 .vscode/
 
-# Django stuff
+# Django files
 media/
 staticfiles/
 static_root/
@@ -31,17 +31,17 @@ static/
 .env
 *.env
 
-# Byte-compiled / temp
+# Byte-compiled / temporary files
 *.tmp
 *.temp
 *.swp
 
-# pytest / coverage (if added in future)
+# pytest / coverage files (if added in the future)
 htmlcov/
 .coverage
 .pytest_cache/
 
-
+# Django migrations
 */migrations/*.py
 !*/migrations/__init__.py
 .history/

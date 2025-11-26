@@ -3,16 +3,22 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
 from apps.account.services.otp_service import OTPService
-from apps.user.models import User, CustomerProfile, SellerProfile
+from apps.user.models import User
 from .forms import (
     SendOTPForm, VerifyOTPForm, SignupForm,
     SigninForm, EditCustomerProfileForm, EditSellerProfileForm
 )
 
-
+# -----------------------------
+# Send OTP View
+# -----------------------------
 class SendOTPView(View):
+    """
+    Handle sending OTP to a user's phone.
+    GET: Display phone input form.
+    POST: Validate phone and send OTP.
+    """
     template_name = "account/send_otp.html"
 
     def get(self, request):
@@ -28,7 +34,15 @@ class SendOTPView(View):
         return render(request, self.template_name, {"form": form})
 
 
+# -----------------------------
+# Verify OTP View
+# -----------------------------
 class VerifyOTPView(View):
+    """
+    Handle OTP verification.
+    GET: Display verification form.
+    POST: Validate OTP, login user or redirect to signup.
+    """
     template_name = "account/verify_otp.html"
 
     def get(self, request, phone):
@@ -51,7 +65,15 @@ class VerifyOTPView(View):
         return render(request, self.template_name, {"form": form, "phone": phone})
 
 
+# -----------------------------
+# Signup View
+# -----------------------------
 class SignupView(View):
+    """
+    Handle new user registration.
+    GET: Display signup form.
+    POST: Create user based on role and log in.
+    """
     template_name = "account/signup.html"
 
     def get(self, request, phone):
@@ -64,20 +86,29 @@ class SignupView(View):
             full_name = form.cleaned_data["full_name"]
             role = form.cleaned_data["role"]
 
+            # Create user with role-based flag
             user = User.objects.create(
                 phone=phone,
                 full_name=full_name,
                 is_seller=(role == "seller"),
             )
 
+            # Log the user in
             login(request, user)
-
             return redirect("home:index")
 
         return render(request, self.template_name, {"form": form, "phone": phone})
 
 
+# -----------------------------
+# Signin View
+# -----------------------------
 class SigninView(View):
+    """
+    Handle user login by phone.
+    GET: Display login form.
+    POST: Validate phone and send OTP.
+    """
     template_name = "account/signin.html"
 
     def get(self, request):
@@ -97,13 +128,25 @@ class SigninView(View):
         return render(request, self.template_name, {"form": form})
 
 
+# -----------------------------
+# Signout View
+# -----------------------------
 class SignoutView(View):
+    """
+    Handle user logout.
+    """
     def get(self, request):
         logout(request)
         return redirect("account:signin")
 
 
+# -----------------------------
+# Profile View
+# -----------------------------
 class ProfileView(LoginRequiredMixin, View):
+    """
+    Display the user's profile.
+    """
     template_name = "account/profile_view.html"
 
     def get(self, request):
@@ -115,9 +158,20 @@ class ProfileView(LoginRequiredMixin, View):
         })
 
 
+# -----------------------------
+# Profile Edit View
+# -----------------------------
 class ProfileEditView(LoginRequiredMixin, View):
+    """
+    Handle editing of user profiles.
+    Selects the form and template based on user role.
+    """
 
     def get_form_and_template(self, user):
+        """
+        Determine the form class, template, and profile instance
+        based on whether the user is a seller or customer.
+        """
         if user.is_seller:
             return EditSellerProfileForm, "account/profile_edit_seller.html", user.seller_profile
         return EditCustomerProfileForm, "account/profile_edit_customer.html", user.customer_profile
@@ -131,6 +185,7 @@ class ProfileEditView(LoginRequiredMixin, View):
         form_class, template, profile = self.get_form_and_template(request.user)
         form = form_class(request.POST, instance=profile)
         if form.is_valid():
+            # Save profile and update user's full name
             form.save(user=request.user)
             messages.success(request, "پروفایل ذخیره شد.")
             return redirect("account:profile")
