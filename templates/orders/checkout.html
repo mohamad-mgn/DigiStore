@@ -6,35 +6,44 @@
 
 <div class="row">
 
-    <!-- سایدبار (هم‌استایل با سایر صفحات) -->
+    <!-- Sidebar -->
     <div class="col-lg-3 mb-4">
         <div class="card shadow-sm border-0" style="border-radius:14px;">
             <div class="card-body">
-                <h6 class="fw-bold mb-3 text-primary">عملیات سفارش</h6>
+                <h6 class="fw-bold mb-3 text-primary">عملیات سفارش {# Order Actions #}</h6>
                 <ul class="list-unstyled">
-                    <li><i class="bi bi-cash-coin text-primary me-2"></i> تسویه حساب</li>
-                    <li class="text-muted small mt-2">اطلاعات شما محرمانه است ✔️</li>
+                    <li>
+                        <i class="bi bi-cash-coin text-primary me-2"></i> تسویه حساب {# Checkout #}
+                    </li>
+                    <li class="text-muted small mt-2">
+                        اطلاعات شما محرمانه است ✔️ {# Your information is confidential #}
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- محتوای اصلی -->
+    <!-- Main Content -->
     <div class="col-lg-9">
 
-        <!-- هدر بخش -->
+        <!-- Section Header -->
         <div class="mb-4 p-3 rounded"
              style="background:var(--navy); color:white; border-radius:14px; box-shadow:var(--shadow-1);">
-            <h4 class="fw-bold mb-0">تسویه حساب</h4>
+            <h4 class="fw-bold mb-0">تسویه حساب {# Checkout #}</h4>
         </div>
 
+        <!-- Checkout Card -->
         <div class="card shadow-sm border-0 p-4" style="border-radius:14px;">
             <form method="post">
                 {% csrf_token %}
+                
+                <!-- Render Form -->
                 {{ form.as_p }}
+
+                <!-- Submit Button -->
                 <button class="btn btn-success px-4 mt-3">
                     <i class="bi bi-credit-card-2-front"></i>
-                    ایجاد سفارش و پرداخت
+                    ایجاد سفارش و پرداخت {# Create Order & Pay #}
                 </button>
             </form>
         </div>

@@ -7,24 +7,24 @@
 
 <div class="row justify-content-center">
 
-    <!-- ستون اصلی -->
+    <!-- Main Column -->
     <div class="col-lg-6">
 
-        <!-- عنوان صفحه -->
+        <!-- Page Title -->
         <div class="mb-4 p-3 rounded text-white"
              style="background: var(--navy); border-radius:14px; box-shadow: var(--shadow-1);">
             <h4 class="fw-bold mb-0 text-center">پرداخت سفارش</h4>
         </div>
 
-        <!-- کارت پرداخت -->
+        <!-- Payment Card -->
         <div class="card shadow-sm border-0 p-4" style="border-radius:14px;">
 
-            <!-- عنوان سفارش -->
+            <!-- Order Number -->
             <h5 class="fw-bold text-center mb-3">
                 سفارش شماره {{ payment.order.id }}
             </h5>
 
-            <!-- مبلغ -->
+            <!-- Amount -->
             <p class="text-center text-muted mb-4">
                 مبلغ قابل پرداخت:
                 <span class="fw-bold text-dark">
@@ -32,15 +32,17 @@
                 </span>
             </p>
 
-            <!-- دکمه‌ها -->
+            <!-- Buttons -->
             <form method="post" class="text-center">
-                {% csrf_token %}
+                {% csrf_token %} {# CSRF token for security #}
 
+                <!-- Success Payment Button -->
                 <button name="action" value="success"
                         class="btn btn-success px-4 py-2 fw-bold rounded-3 me-2">
                     پرداخت موفق
                 </button>
 
+                <!-- Failed Payment Button -->
                 <button name="action" value="fail"
                         class="btn btn-danger px-4 py-2 fw-bold rounded-3">
                     پرداخت ناموفق

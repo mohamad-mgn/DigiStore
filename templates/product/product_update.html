@@ -9,29 +9,38 @@
 
     <div class="col-lg-8">
 
-        <!-- عنوان -->
+        <!-- Section Title -->
         <div class="mb-4 p-3 rounded text-white"
              style="background: var(--navy); border-radius:14px; box-shadow: var(--shadow-1);">
             <h4 class="fw-bold mb-0 text-center">
-                ویرایش محصول
+                ویرایش محصول {# Edit Product #}
             </h4>
         </div>
 
+        <!-- Form Card -->
         <div class="card shadow-sm border-0" style="border-radius:14px;">
             <div class="card-body">
 
+                <!-- Product Edit Form -->
                 <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
+                    {% csrf_token %} {# CSRF Token for Security #}
 
-                    {{ form.as_p }}
+                    {{ form.as_p }} {# Render Form Fields as Paragraphs #}
 
+                    <!-- Form Actions: Save / Cancel -->
                     <div class="d-flex justify-content-between mt-4">
-                        <button class="btn btn-success px-4">ذخیره</button>
 
+                        <!-- Save Button -->
+                        <button class="btn btn-success px-4">
+                            ذخیره {# Save #}
+                        </button>
+
+                        <!-- Cancel Button -->
                         <a class="btn btn-outline-secondary px-4"
                            href="{% url 'product:detail' object.id %}">
-                            انصراف
+                            انصراف {# Cancel #}
                         </a>
+
                     </div>
 
                 </form>

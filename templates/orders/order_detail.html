@@ -6,66 +6,67 @@
 
 <div class="row">
 
-    <!-- سایدبار -->
+    <!-- Sidebar -->
     <div class="col-lg-3 mb-4">
         <div class="card shadow-sm border-0" style="border-radius:14px;">
             <div class="card-body">
                 <h6 class="fw-bold mb-3 text-primary">جزئیات سفارش</h6>
                 <p class="text-muted small">
-                    مشاهده اطلاعات کامل سفارش
+                    مشاهده اطلاعات کامل سفارش {# View full order details #}
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- محتوای اصلی -->
+    <!-- Main Content -->
     <div class="col-lg-9">
 
-        <!-- تیتر بخش -->
+        <!-- Section Title -->
         <div class="mb-4 p-3 rounded"
              style="background:var(--navy); color:white; border-radius:14px; box-shadow:var(--shadow-1);">
             <h4 class="fw-bold mb-0">سفارش #{{ order.id }}</h4>
         </div>
 
+        <!-- Order Card -->
         <div class="card shadow-sm border-0 p-4" style="border-radius:14px;">
 
-            <!-- وضعیت -->
+            <!-- Status -->
             <p class="fw-bold mb-3">
-                وضعیت:
+                وضعیت: {# Order Status #}
                 
                 {% if order.status == 'pending' %}
                     <span class="badge bg-warning text-dark">
-                        <i class="bi bi-clock-fill"></i> در انتظار
+                        <i class="bi bi-clock-fill"></i> در انتظار {# Pending #}
                     </span>
                 {% elif order.status == 'processing' %}
                     <span class="badge bg-info text-dark">
-                        <i class="bi bi-gear-fill"></i> در حال پردازش
+                        <i class="bi bi-gear-fill"></i> در حال پردازش {# Processing #}
                     </span>
                 {% elif order.status == 'shipped' %}
                     <span class="badge bg-primary">
-                        <i class="bi bi-truck"></i> ارسال شده
+                        <i class="bi bi-truck"></i> ارسال شده {# Shipped #}
                     </span>
                 {% elif order.status == 'delivered' %}
                     <span class="badge bg-success">
-                        <i class="bi bi-check-circle-fill"></i> تحویل داده شده
+                        <i class="bi bi-check-circle-fill"></i> تحویل داده شده {# Delivered #}
                     </span>
                 {% elif order.status == 'cancelled' %}
                     <span class="badge bg-danger">
-                        <i class="bi bi-x-circle-fill"></i> لغو شده
+                        <i class="bi bi-x-circle-fill"></i> لغو شده {# Cancelled #}
                     </span>
                 {% else %}
                     <span class="badge bg-secondary">{{ order.get_status_display }}</span>
                 {% endif %}
             </p>
 
-            <!-- جدول آیتم‌ها -->
+            <!-- Items Table -->
             <table class="table align-middle">
                 <thead>
                     <tr>
-                        <th>محصول</th>
-                        <th>قیمت</th>
-                        <th>تعداد</th>
-                        <th>جمع</th>
+                        <th>محصول {# Product #}</th>
+                        <th>قیمت {# Price #}</th>
+                        <th>تعداد {# Quantity #}</th>
+                        <th>جمع {# Total #}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,6 +83,7 @@
 
             <hr>
 
+            <!-- Total Amount -->
             <p class="fs-5 fw-bold text-end">
                 مجموع قابل پرداخت:
                 <span class="text-primary">{{ order.total_amount|intcomma }}</span>
