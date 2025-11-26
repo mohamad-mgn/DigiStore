@@ -1,24 +1,41 @@
 {% extends "base.html" %}
-{% block title %}تایید کد - دیجی‌استور{% endblock %}
+{% block title %}تایید کد{% endblock %}
+
 {% block content %}
 <div class="row justify-content-center">
-  <div class="col-md-5">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">ورود با کد</h5>
-        <p class="text-muted">کد ۶ رقمی ارسال‌شده به {{ phone }} را وارد کنید.</p>
+    <div class="col-md-5">
 
-        <form method="post">
-          {% csrf_token %}
-          {{ form.phone }}  {# hidden #}
-          <div class="mb-3">
-            {{ form.code.label_tag }}
-            {{ form.code }}
-          </div>
-          <button class="btn btn-success">تایید</button>
-        </form>
-      </div>
+        <!-- Card container for OTP verification -->
+        <div class="card shadow-sm border-0" style="border-radius:14px;">
+            <div class="card-body p-4">
+
+                <!-- Heading -->
+                <h4 class="fw-bold text-primary mb-2">تایید کد</h4>
+
+                <!-- Instruction text with phone number -->
+                <p class="text-muted">کد ۶ رقمی ارسال‌شده به {{ phone }} را وارد کنید.</p>
+
+                <!-- OTP verification form -->
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Hidden phone input -->
+                    {{ form.phone }}
+
+                    <!-- OTP code input -->
+                    <div class="mb-3">
+                        {{ form.code.label_tag }}
+                        {{ form.code }}
+                    </div>
+
+                    <!-- Submit button -->
+                    <button class="btn btn-success w-100">تایید</button>
+
+                </form>
+
+            </div>
+        </div>
+
     </div>
-  </div>
 </div>
 {% endblock %}

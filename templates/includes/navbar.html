@@ -1,5 +1,6 @@
 {% load static %}
 
+<!-- Main Navbar -->
 <nav class="navbar navbar-expand-lg py-3 shadow-sm fixed-top" style="background:#0a1a3c;">
   <div class="container">
 
@@ -9,16 +10,16 @@
       <span class="fw-bold fs-4">دیجی‌استور</span>
     </a>
 
-    <!-- Toggler -->
+    <!-- Toggler for mobile -->
     <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menu -->
+    <!-- Navbar Menu -->
     <div class="collapse navbar-collapse" id="navbarMenu">
       <div class="d-flex flex-column flex-lg-row w-100 justify-content-between align-items-lg-center mt-3 mt-lg-0">
 
-        <!-- Right Menu (محصولات و درباره ما) -->
+        <!-- Right Menu: Products & About Us -->
         <ul class="navbar-nav gap-3 mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link text-white-50 hover-white" href="{% url 'product:list' %}">محصولات</a>
@@ -28,14 +29,15 @@
           </li>
         </ul>
 
-        <!-- Left Menu (cart + login/signup) -->
+        <!-- Left Menu: Cart + Auth Links -->
         <ul class="navbar-nav gap-3 align-items-center">
 
-          <!-- Cart -->
+          <!-- Cart Button -->
           <li class="nav-item position-relative">
             <a class="btn btn-outline-light px-3" href="{% url 'cart:detail' %}">
               <i class="bi bi-cart3"></i>
               {% if request.user.is_authenticated and request.user.cart.items.count %}
+              <!-- Cart item count badge -->
               <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
                 {{ request.user.cart.items.count }}
               </span>
@@ -44,23 +46,23 @@
           </li>
 
           {% if request.user.is_authenticated %}
-          <!-- Dashboard -->
+          <!-- Dashboard link for logged-in users -->
           <li class="nav-item">
             <a class="nav-link text-white-50 hover-white" href="{% url 'dashboard:customer' %}">داشبورد</a>
           </li>
 
-          <!-- Logout -->
+          <!-- Logout button -->
           <li class="nav-item">
             <a class="btn btn-danger btn-sm" href="{% url 'account:signout' %}">خروج</a>
           </li>
 
           {% else %}
-          <!-- Login -->
+          <!-- Login button for guests -->
           <li class="nav-item">
             <a class="btn btn-primary btn-sm px-3" href="{% url 'account:signin' %}">ورود</a>
           </li>
 
-          <!-- Signup -->
+          <!-- Signup button for guests -->
           <li class="nav-item">
             <a class="btn btn-outline-light btn-sm px-3" href="{% url 'account:send_otp' %}">ثبت‌نام</a>
           </li>
@@ -74,14 +76,15 @@
   </div>
 </nav>
 
+<!-- ⭐ Navbar styles -->
 <style>
-  /* Hover سفید برای لینک‌ها */
+  /* Hover effect for links */
   .hover-white:hover {
     color: #ffffff !important;
   }
 
-  /* فاصله برای محتوای زیر navbar */
+  /* Add spacing below fixed navbar */
   body {
-    padding-top: 80px; /* ارتفاع تقریبی navbar */
+    padding-top: 80px; /* approximate navbar height */
   }
 </style>

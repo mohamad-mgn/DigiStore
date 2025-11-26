@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<!-- ⭐ هدر صفحه -->
+<!-- Page header -->
 <div class="mb-4 p-3 rounded"
      style="background: var(--navy); color:white; box-shadow: var(--shadow-1); border-radius:14px;">
     <h4 class="fw-bold mb-0">سبد خرید شما</h4>
@@ -14,6 +14,7 @@
 
 {% if cart.items.count %}
 
+<!-- Cart table -->
 <div class="card shadow-sm border-0" style="border-radius:14px;">
     <div class="card-body p-0">
 
@@ -33,11 +34,11 @@
             {% for item in items %}
             <tr>
 
-                <!-- ⭐ ستون محصول -->
+                <!-- Product column -->
                 <td>
                     <div class="d-flex align-items-center gap-2">
 
-                        <!-- تصویر محصول -->
+                        <!-- Product image -->
                         {% if item.product.image %}
                         <img src="{{ item.product.image.url }}"
                              class="rounded"
@@ -48,7 +49,7 @@
                              style="width:60px; height:60px; object-fit:cover;">
                         {% endif %}
 
-                        <!-- نام محصول -->
+                        <!-- Product title -->
                         <a href="{{ item.product.get_absolute_url }}"
                            class="fw-bold text-dark text-decoration-none">
                             {{ item.product.title }}
@@ -56,12 +57,12 @@
                     </div>
                 </td>
 
-                <!-- ⭐ قیمت -->
+                <!-- Product price -->
                 <td class="fw-bold">
                     {{ item.product.price|intcomma }} تومان
                 </td>
 
-                <!-- ⭐ فرم تعداد -->
+                <!-- Quantity form -->
                 <td>
                     <form method="post" action="{% url 'cart:update' item.id %}"
                           class="d-flex align-items-center gap-2">
@@ -76,12 +77,12 @@
                     </form>
                 </td>
 
-                <!-- ⭐ جمع -->
+                <!-- Subtotal -->
                 <td class="fw-bold">
                     {{ item.total_price|intcomma }} تومان
                 </td>
 
-                <!-- ⭐ حذف -->
+                <!-- Remove item -->
                 <td>
                     <form method="post" action="{% url 'cart:remove' item.id %}">
                         {% csrf_token %}
@@ -98,16 +99,18 @@
     </div>
 </div>
 
-<!-- ⭐ بخش جمع کل + دکمه‌ها -->
+<!-- Total & action buttons -->
 <div class="d-flex justify-content-between align-items-center mt-4 p-3 bg-white shadow-sm rounded"
      style="border-radius:14px;">
 
+    <!-- Total price -->
     <h5 class="fw-bold mb-0">
         جمع کل:
         <span class="text-primary">{{ cart.total_price|intcomma }}</span>
         تومان
     </h5>
 
+    <!-- Clear cart & checkout buttons -->
     <div class="d-flex gap-2">
 
         <form method="post" action="{% url 'cart:clear' %}">
@@ -124,7 +127,7 @@
 
 {% else %}
 
-<!-- ⭐ سبد خالی -->
+<!-- Empty cart message -->
 <div class="text-center p-5 bg-white shadow-sm rounded"
      style="border-radius:14px;">
     <img src="{% static 'images/empty-cart.png' %}"

@@ -7,6 +7,7 @@
 
 <div class="row justify-content-center">
 
+    <!-- ستون اصلی -->
     <div class="col-lg-6">
 
         <!-- عنوان صفحه -->
@@ -18,10 +19,12 @@
         <!-- کارت پرداخت -->
         <div class="card shadow-sm border-0 p-4" style="border-radius:14px;">
 
+            <!-- عنوان سفارش -->
             <h5 class="fw-bold text-center mb-3">
                 سفارش شماره {{ payment.order.id }}
             </h5>
 
+            <!-- مبلغ -->
             <p class="text-center text-muted mb-4">
                 مبلغ قابل پرداخت:
                 <span class="fw-bold text-dark">
@@ -29,6 +32,7 @@
                 </span>
             </p>
 
+            <!-- دکمه‌ها -->
             <form method="post" class="text-center">
                 {% csrf_token %}
 

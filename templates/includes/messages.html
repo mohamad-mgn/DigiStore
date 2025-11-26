@@ -1,11 +1,48 @@
 {% load static %}
+
 {% if messages %}
-  <div class="container my-2">
+<div class="container my-3">
+
     {% for message in messages %}
-      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-        {{ message }}
+    <!-- Single alert message -->
+    <div class="alert alert-{{ message.tags }} fade show border-0 shadow-sm message-box"
+         style="border-radius:14px; background:var(--card-bg);">
+
+        <div class="d-flex align-items-center">
+
+            <!-- Icon based on message type -->
+            {% if message.tags == "success" %}
+                <i class="bi bi-check-circle-fill text-success fs-4 me-2"></i>
+            {% elif message.tags == "warning" %}
+                <i class="bi bi-exclamation-triangle-fill text-warning fs-4 me-2"></i>
+            {% elif message.tags == "error" %}
+                <i class="bi bi-x-circle-fill text-danger fs-4 me-2"></i>
+            {% else %}
+                <i class="bi bi-info-circle-fill text-primary fs-4 me-2"></i>
+            {% endif %}
+
+            <!-- Message text -->
+            <span class="fw-bold">{{ message }}</span>
+
+        </div>
+
+        <!-- Dismiss button -->
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-      </div>
+
+    </div>
     {% endfor %}
-  </div>
+
+</div>
+
+<!-- Animation for alert -->
+<style>
+.message-box {
+    animation: fadeInDown .35s ease;
+}
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+
 {% endif %}

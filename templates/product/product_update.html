@@ -1,19 +1,46 @@
 {% extends "base.html" %}
-{% block title %}{{ view.title|default:'ایجاد محصول' }}{% endblock %}
+{% load static %}
+
+{% block title %}ویرایش محصول — دیجی‌استور{% endblock %}
+
 {% block content %}
+
 <div class="row justify-content-center">
-  <div class="col-md-8">
-    <div class="card">
-      <div class="card-body">
-        <h5>{{ view.title|default:'ایجاد / ویرایش محصول' }}</h5>
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button class="btn btn-success">ذخیره</button>
-          <a class="btn btn-secondary" href="{% url 'product:list' %}">انصراف</a>
-        </form>
-      </div>
+
+    <div class="col-lg-8">
+
+        <!-- عنوان -->
+        <div class="mb-4 p-3 rounded text-white"
+             style="background: var(--navy); border-radius:14px; box-shadow: var(--shadow-1);">
+            <h4 class="fw-bold mb-0 text-center">
+                ویرایش محصول
+            </h4>
+        </div>
+
+        <div class="card shadow-sm border-0" style="border-radius:14px;">
+            <div class="card-body">
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <button class="btn btn-success px-4">ذخیره</button>
+
+                        <a class="btn btn-outline-secondary px-4"
+                           href="{% url 'product:detail' object.id %}">
+                            انصراف
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
     </div>
-  </div>
+
 </div>
+
 {% endblock %}
