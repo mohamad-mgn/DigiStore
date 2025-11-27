@@ -1,36 +1,111 @@
 {% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
 {% block title %}فروشگاه — {{ store.store_name }}{% endblock %}
+
 {% block content %}
+
 <div class="row">
-  <div class="col-md-8">
-    <h3>{{ store.store_name }}</h3>
-    <p>{{ store.description }}</p>
-    <hr>
-    <h5>محصولات فروشگاه</h5>
-    <div class="row">
-      {% for p in store.products.all %}
-        <div class="col-md-6 col-lg-4 mb-3">
-          <div class="card">
-            <img src="{{ p.image.url if p.image else static('images/placeholder.png') }}" class="card-img-top" style="height:140px; object-fit:cover;">
-            <div class="card-body">
-              <h6>{{ p.title }}</h6>
-              <p class="small text-muted">{{ p.price|intcomma }} تومان</p>
-              <a href="{{ p.get_absolute_url }}" class="btn btn-sm btn-outline-primary">مشاهده</a>
-            </div>
-          </div>
+
+    <!-- Main column: Store info + products -->
+    <div class="col-lg-8">
+
+        <!-- Store title section -->
+        <div class="mb-4 p-3 rounded"
+             style="background: var(--navy); color:white; border-radius:14px; box-shadow: var(--shadow-1);">
+            <h4 class="fw-bold mb-0">{{ store.store_name }}</h4>
         </div>
-      {% empty %}
-        <div class="col-12">بدون محصول</div>
-      {% endfor %}
+
+        <!-- Store description card -->
+        <div class="card shadow-sm border-0 mb-4" style="border-radius:14px;">
+            <div class="card-body">
+                <p class="text-muted" style="line-height:1.9;">
+                    {{ store.description|default:"توضیحاتی ثبت نشده است." }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Store products header -->
+        <h5 class="fw-bold mb-3">محصولات فروشگاه</h5>
+
+        <!-- Products grid -->
+        <div class="row">
+            {% for p in store.products.all %}
+                <div class="col-sm-6 col-lg-4 mb-4">
+
+                    <!-- Single product card -->
+                    <div class="product-card">
+
+                        <!-- Product image -->
+                        {% if p.image %}
+                            <img src="{{ p.image.url }}" class="product-img">
+                        {% else %}
+                            <img src="{% static 'images/placeholder.png' %}" class="product-img">
+                        {% endif %}
+
+                        <!-- Product details -->
+                        <div class="p-3">
+                            <h6 class="fw-bold mb-1">{{ p.title }}</h6>
+
+                            <!-- Product actions -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ p.get_absolute_url }}"
+                                   class="btn btn-sm btn-outline-primary">مشاهده</a>
+
+                                <span class="fw-bold">{{ p.price|intcomma }} تومان</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            {% empty %}
+                <!-- No products message -->
+                <div class="col-12">
+                    <div class="alert alert-info shadow-sm">
+                        محصولی برای این فروشگاه ثبت نشده است.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
-  </div>
-  <div class="col-md-4">
-    <div class="card p-3">
-      <p>فروشنده: {{ store.seller.full_name|default:store.seller.phone }}</p>
-      {% if request.user == store.seller %}
-        <a class="btn btn-sm btn-primary" href="{% url 'store:edit' %}">ویرایش فروشگاه</a>
-      {% endif %}
+
+
+    <!-- Sidebar: seller info -->
+    <div class="col-lg-4">
+
+        <!-- Sticky seller info card -->
+        <div class="card shadow-sm border-0 p-3 sticky-top"
+             style="top:90px; border-radius:14px;">
+
+            <!-- Seller details -->
+            <h6 class="fw-bold mb-3">اطلاعات فروشنده</h6>
+
+            <!-- Seller name or phone -->
+            <p class="mb-1">
+                <i class="bi bi-person-fill text-primary"></i>
+                {{ store.seller.full_name|default:store.seller.phone }}
+            </p>
+
+            <!-- Seller profile description -->
+            <p class="small text-muted mb-3">
+                {{ store.seller.seller_profile.description|default:"—" }}
+            </p>
+
+            <!-- Edit button - only for store owner -->
+            {% if request.user == store.seller %}
+                <a class="btn btn-primary w-100"
+                   href="{% url 'store:edit' %}">
+                    ویرایش فروشگاه
+                </a>
+            {% endif %}
+
+        </div>
+
     </div>
-  </div>
+
 </div>
+
 {% endblock %}
