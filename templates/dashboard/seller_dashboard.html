@@ -17,15 +17,22 @@
 
                 <!-- Sidebar links -->
                 <div class="list-group">
-                    <a href="{% url 'store:dashboard' %}"
+                    <a href="{% url 'dashboard:seller' %}"
                        class="list-group-item list-group-item-action">
                         داشبورد
                     </a>
 
-                    <a href="{% url 'store:edit' %}"
-                       class="list-group-item list-group-item-action">
-                        ویرایش فروشگاه
-                    </a>
+                    {% if store %}
+                        <a href="{% url 'store:edit' store.pk %}"
+                        class="list-group-item list-group-item-action">
+                            ویرایش فروشگاه
+                        </a>
+                    {% else %}
+                        <a href="{% url 'store:create' %}"
+                        class="list-group-item list-group-item-action text-success">
+                            ایجاد فروشگاه
+                        </a>
+                    {% endif %}
 
                     <a href="{% url 'product:create' %}"
                        class="list-group-item list-group-item-action">
@@ -65,7 +72,7 @@
 
                 <!-- Edit store button -->
                 <a class="btn btn-sm btn-primary"
-                   href="{% url 'store:edit' %}">
+                   href="{% url 'store:edit' store.pk%}">
                     ویرایش فروشگاه
                 </a>
 
@@ -81,9 +88,15 @@
                 <div class="card shadow-sm border-0">
 
                     <!-- Product image -->
-                    <img src="{{ p.image.url if p.image else static('images/placeholder.png') }}"
-                         class="card-img-top"
-                         style="height:150px; object-fit:cover;">
+                    {% if p.image %}
+                        <img src="{{ p.image.url }}"
+                            class="card-img-top"
+                            style="height:150px; object-fit:cover;">
+                    {% else %}
+                        <img src="{% static 'images/placeholder.png' %}"
+                            class="card-img-top"
+                            style="height:150px; object-fit:cover;">
+                    {% endif %}
 
                     <div class="card-body">
                         <!-- Product title -->
@@ -136,7 +149,11 @@
         <!-- Message if seller has no store -->
         <div class="alert alert-warning">
             شما هنوز فروشگاه ندارید.
-            <a href="{% url 'store:edit' %}">ایجاد فروشگاه</a>
+            {% if store %}
+                <a href="{% url 'store:edit' store.pk %}">ویرایش فروشگاه</a>
+            {% else %}
+                <a href="{% url 'store:create' %}">ایجاد فروشگاه</a>
+            {% endif %}
         </div>
 
         {% endif %}

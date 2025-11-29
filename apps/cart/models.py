@@ -55,6 +55,8 @@ class CartItem(models.Model):
 
     class Meta:
         unique_together = ('cart', 'product')  # Prevent duplicate products in the same cart
+        verbose_name = "آیتم سبد خرید"
+        verbose_name_plural = "آیتم‌های سبد خرید"
 
     def __str__(self):
         return f"{self.product.title} (x{self.quantity})"

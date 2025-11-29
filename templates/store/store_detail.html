@@ -97,7 +97,7 @@
             <!-- Edit button - only for store owner -->
             {% if request.user == store.seller %}
                 <a class="btn btn-primary w-100"
-                   href="{% url 'store:edit' %}">
+                   href="{% url 'store:edit' store.pk%}">
                     ویرایش فروشگاه
                 </a>
             {% endif %}
