@@ -92,6 +92,16 @@
                 تومان
             </p>
 
+            <!-- Payment -->
+            1. {% if order.status == 'pending' %}
+            2. <div class="text-end mt-4">
+            3.     <a href="{% url 'orders:payment' order.id %}" 
+            4.        class="btn btn-success btn-lg">
+            5.         پرداخت سفارش
+            6.     </a>
+            7. </div>
+            8. {% endif %}
+
         </div>
 
     </div>

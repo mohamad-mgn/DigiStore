@@ -119,3 +119,23 @@ class SellerUpdateOrderStatusView(LoginRequiredMixin, UserPassesTestMixin, View)
 
         # Redirect back to the referring page or seller orders page
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse_lazy('orders:seller_orders')))
+    
+    
+# ========================================================
+# Payment View (Mock Payment)
+# ========================================================
+class PaymentView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        order = get_object_or_404(Order, pk=pk, user=request.user)
+        
+        if order.status != "pending":
+            messages.error(request, "این سفارش قبلاً پرداخت شده یا قابل پرداخت نیست.")
+            return redirect("orders:detail", pk=pk)
+        
+        # --- Mock Payment Process ---
+        order.status = "processing"
+        order.save(update_fields=["status", "updated_at"])
+        
+        messages.success(request, "پرداخت با موفقیت انجام شد!")
+        
+        return redirect("orders:detail", pk=pk)

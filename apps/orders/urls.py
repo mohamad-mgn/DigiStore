@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (
     UserOrderListView, OrderDetailView, CheckoutView,
-    SellerOrderListView, SellerUpdateOrderStatusView
+    SellerOrderListView, SellerUpdateOrderStatusView,
+    PaymentView
 )
 
 app_name = "orders"
@@ -24,4 +25,7 @@ urlpatterns = [
 
     # Update the status of a specific order (seller view)
     path("seller/<int:pk>/update-status/", SellerUpdateOrderStatusView.as_view(), name="seller_update_status"),
+
+    # Payment of orders
+    path("<int:pk>/payment,", PaymentView.as_view(), name="payment"),
 ]
