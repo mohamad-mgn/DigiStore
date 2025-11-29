@@ -88,6 +88,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth', # Adds 'user' object to templates
                 'django.contrib.messages.context_processors.messages', # Adds flash messages
                 'apps.account.context_processors.global_context', # Custom global context
+                'apps.cart.context_processors.cart_info', # Cart item badge
             ],
         },
     },
