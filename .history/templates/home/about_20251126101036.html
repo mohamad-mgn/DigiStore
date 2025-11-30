@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}درباره ما — دیجی‌استور{% endblock %}
+
+{% block content %}
+
+<!-- هدر زیبا -->
+<div class="mb-4 p-4 text-white shadow-sm"
+     style="background: var(--navy); border-radius: 14px;">
+    <h2 class="fw-bold mb-1">درباره دیجی‌استور</h2>
+    <p class="mb-0">فروشگاه تخصصی لپ‌تاپ، موبایل و تبلت</p>
+</div>
+
+
+<!-- کارت اصلی -->
+<div class="card shadow-sm border-0" style="border-radius: 14px;">
+
+    <div class="card-body p-4">
+
+        <!-- بخش معرفی -->
+        <div class="mb-4">
+            <h4 class="fw-bold mb-3 text-primary">ما کی هستیم؟</h4>
+            <p class="text-muted" style="line-height: 1.9;">
+                دیجی‌استور یک فروشگاه آنلاین تخصصی در حوزه لپ‌تاپ، موبایل و تبلت است.
+                هدف ما ارائه کالاهای دیجیتال با کیفیت بالا، قیمت مناسب و ارسال سریع است.
+            </p>
+        </div>
+
+        <!-- بخش مزایا -->
+        <div class="mb-4">
+            <h4 class="fw-bold mb-3 text-primary">چرا دیجی‌استور؟</h4>
+
+            <ul class="list-group border-0">
+                <li class="list-group-item border-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-check2-circle text-primary fs-5"></i>
+                    <span class="text-muted">قیمت مناسب و رقابتی</span>
+                </li>
+
+                <li class="list-group-item border-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-truck text-primary fs-5"></i>
+                    <span class="text-muted">ارسال سریع و مطمئن</span>
+                </li>
+
+                <li class="list-group-item border-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-headset text-primary fs-5"></i>
+                    <span class="text-muted">پشتیبانی حرفه‌ای</span>
+                </li>
+
+                <li class="list-group-item border-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-shield-check text-primary fs-5"></i>
+                    <span class="text-muted">محصولات اصل همراه با گارانتی</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- بخش ارتباط -->
+        <div>
+            <h4 class="fw-bold mb-3 text-primary">ارتباط با ما</h4>
+
+            <p class="text-muted mb-2">
+                <i class="bi bi-envelope-fill text-primary"></i>
+                ایمیل: <span class="fw-bold text-dark">support@digistore.com</span>
+            </p>
+
+            <p class="text-muted mb-0">
+                <i class="bi bi-telephone-outbound text-primary"></i>
+                تلفن: <span class="fw-bold text-dark">021-12345678</span>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

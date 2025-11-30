@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}پرداخت{% endblock %}
+{% block content %}
+<h3>پرداخت سفارش {{ order.pk }}</h3>
+<p>مبلغ قابل پرداخت: {{ order.total_amount }} تومان</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-success">پرداخت (شبیه‌سازی)</button>
+</form>
+{% endblock %}

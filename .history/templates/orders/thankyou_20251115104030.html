@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>سفارش ثبت شد — شماره سفارش {{ order.pk }}</h2>
+<p>مبلغ: {{ order.total_price }}</p>
+<a href="{% url 'product:product_list' %}">بازگشت به محصولات</a>
+{% endblock %}

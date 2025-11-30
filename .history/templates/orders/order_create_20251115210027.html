@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}تایید سفارش{% endblock %}
+{% block content %}
+<h3>تایید سفارش</h3>
+<p>اگر همه چیز صحیح است روی «ثبت سفارش» کلیک کنید.</p>
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-success">ثبت سفارش و رفتن به صفحه پرداخت</button>
+</form>
+{% endblock %}

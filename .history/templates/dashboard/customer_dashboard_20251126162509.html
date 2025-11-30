@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}داشبورد مشتری{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- Sidebar -->
+    <div class="col-lg-3 mb-4">
+        <div class="card shadow-sm border-0" style="border-radius:14px;">
+            <div class="card-body">
+
+                <!-- Sidebar heading -->
+                <h5 class="fw-bold mb-3 text-primary">حساب کاربری</h5>
+
+                <!-- Sidebar links -->
+                <div class="list-group">
+
+                    <!-- Profile link -->
+                    <a href="{% url 'account:profile' %}"
+                       class="list-group-item list-group-item-action">
+                        پروفایل
+                    </a>
+
+                    <!-- Orders link -->
+                    <a href="{% url 'orders:list' %}"
+                       class="list-group-item list-group-item-action">
+                        سفارش‌های من
+                    </a>
+
+                    <!-- Cart link -->
+                    <a href="{% url 'cart:detail' %}"
+                       class="list-group-item list-group-item-action">
+                        سبد خرید
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="col-lg-9">
+
+        <!-- Page header -->
+        <div class="mb-4 p-3 rounded"
+             style="background: var(--navy); color:white; border-radius:14px;">
+            <h4 class="fw-bold mb-0">داشبورد مشتری</h4>
+        </div>
+
+        <!-- Welcome message -->
+        <p class="fw-bold">
+            خوش آمدید، {{ request.user.full_name|default:request.user.phone }}
+        </p>
+
+        <!-- Latest orders heading -->
+        <h5 class="fw-bold mb-3">آخرین سفارش‌ها</h5>
+
+        <!-- List of orders -->
+        {% for o in orders %}
+        <div class="card shadow-sm mb-3 border-0">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                
+                <!-- Order info -->
+                <div>
+                    <strong>سفارش #{{ o.id }}</strong>
+                    — {{ o.get_status_display }}
+                </div>
+                
+                <!-- View order button -->
+                <a class="btn btn-sm btn-outline-primary"
+                   href="{% url 'orders:detail' o.id %}">
+                   مشاهده
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <!-- Message if no orders -->
+        <div class="alert alert-info">سفارشی وجود ندارد.</div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

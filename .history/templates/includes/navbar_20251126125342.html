@@ -1,0 +1,86 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg py-3 shadow-sm fixed-top" style="background:#0a1a3c;">
+  <div class="container">
+
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center gap-2 text-white" href="{% url 'home:index' %}">
+      <img src="{% static 'images/logo.png' %}" alt="Logo" style="height:34px;">
+      <span class="fw-bold fs-4">دیجی‌استور</span>
+    </a>
+
+    <!-- Toggler -->
+    <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Menu -->
+    <div class="collapse navbar-collapse" id="navbarMenu">
+
+      <div class="d-flex flex-column flex-lg-row w-100 justify-content-between align-items-lg-center mt-3 mt-lg-0">
+
+        <!-- Right Menu -->
+        <ul class="navbar-nav gap-3 mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white-50 hover-white" href="{% url 'product:list' %}">محصولات</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white-50 hover-white" href="{% url 'home:about' %}">درباره ما</a>
+          </li>
+        </ul>
+
+        <!-- Left Menu -->
+        <ul class="navbar-nav gap-3 align-items-center">
+
+          <!-- Cart -->
+          <li class="nav-item position-relative">
+            <a class="btn btn-outline-light px-3" href="{% url 'cart:detail' %}">
+              <i class="bi bi-cart3"></i>
+
+              {% if request.user.is_authenticated and request.user.cart.items.count %}
+              <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                {{ request.user.cart.items.count }}
+              </span>
+              {% endif %}
+            </a>
+          </li>
+
+          {% if request.user.is_authenticated %}
+
+          <!-- Dashboard -->
+          <li class="nav-item">
+            <a class="nav-link text-white-50 hover-white" href="{% url 'dashboard:customer' %}">داشبورد</a>
+          </li>
+
+          <!-- Logout -->
+          <li class="nav-item">
+            <a class="btn btn-danger btn-sm" href="{% url 'account:signout' %}">خروج</a>
+          </li>
+
+          {% else %}
+
+          <!-- Login -->
+          <li class="nav-item">
+            <a class="btn btn-primary btn-sm px-3" href="{% url 'account:signin' %}">ورود</a>
+          </li>
+
+          <!-- Signup -->
+          <li class="nav-item">
+            <a class="btn btn-outline-light btn-sm px-3" href="{% url 'account:send_otp' %}">ثبت‌نام</a>
+          </li>
+
+          {% endif %}
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<style>
+  /* Hover سفید برای لینک‌ها */
+  .hover-white:hover {
+    color: #ffffff !important;
+  }
+</style>

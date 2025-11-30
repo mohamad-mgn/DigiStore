@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}{{ product.title }} — دیجی‌استور{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <!-- بخش تصویر -->
+    <div class="col-lg-5 mb-4">
+
+        <div class="card shadow-sm border-0 p-2" style="border-radius:14px;">
+            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/placeholder.png' %}{% endif %}"
+                 class="img-fluid rounded"
+                 style="width:100%; border-radius:12px; max-height:420px; object-fit:cover;">
+        </div>
+
+    </div>
+
+    <!-- بخش اطلاعات محصول -->
+    <div class="col-lg-7">
+
+        <!-- عنوان محصول -->
+        <div class="mb-3 p-3 rounded text-white"
+             style="background: var(--navy); border-radius:14px; box-shadow: var(--shadow-1);">
+            <h4 class="fw-bold mb-0">{{ product.title }}</h4>
+        </div>
+
+        <div class="card shadow-sm border-0 p-4" style="border-radius:14px;">
+
+            <!-- نام فروشگاه -->
+            <p class="text-muted mb-2">
+                فروشنده:
+                <strong>{{ product.store.store_name }}</strong>
+            </p>
+
+            <!-- قیمت -->
+            <h4 class="text-success fw-bold mb-3">
+                {{ product.price|intcomma }} تومان
+            </h4>
+
+            <!-- توضیحات -->
+            <p class="text-muted" style="line-height:1.9;">
+                {{ product.description|linebreaks }}
+            </p>
+
+            <!-- دکمه‌ها -->
+            <form method="post" action="{% url 'cart:add' product.id %}" class="mt-3">
+                {% csrf_token %}
+
+                <button class="btn btn-primary px-4 fw-bold">
+                    افزودن به سبد خرید
+                </button>
+
+                {% if request.user.is_authenticated and request.user.is_seller and request.user == product.store.seller %}
+                    <a href="{% url 'product:update' product.id %}"
+                       class="btn btn-outline-secondary px-4 fw-bold ms-2">
+                        ویرایش محصول
+                    </a>
+                {% endif %}
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

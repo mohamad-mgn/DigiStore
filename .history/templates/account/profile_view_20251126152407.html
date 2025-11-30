@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}پروفایل — {{ user.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+
+    <!-- کارت اطلاعات پایه -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0" style="border-radius:14px;">
+            <div class="card-body p-4 text-center">
+
+                <h5 class="fw-bold">{{ user.full_name|default:user.phone }}</h5>
+                <p class="text-muted mb-3">{{ user.phone }}</p>
+
+                <a href="{% url 'account:profile_edit' %}"
+                   class="btn btn-outline-primary w-100">
+                    ویرایش پروفایل
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- اطلاعات نقش -->
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0" style="border-radius:14px;">
+            <div class="card-body p-4">
+
+                {% if user.is_seller %}
+                    <h5 class="fw-bold mb-3 text-primary">پروفایل فروشنده</h5>
+
+                    <p><strong>نام فروشگاه:</strong> {{ user.seller_profile.store_name }}</p>
+                    <p><strong>کد ملی:</strong> {{ user.seller_profile.national_id }}</p>
+                    <p><strong>شماره تماس دوم:</strong> {{ user.seller_profile.phone_secondary }}</p>
+                    <p><strong>توضیحات:</strong> {{ user.seller_profile.description }}</p>
+
+                {% else %}
+                    <h5 class="fw-bold mb-3 text-primary">پروفایل خریدار</h5>
+
+                    <p><strong>آدرس:</strong> {{ user.customer_profile.address }}</p>
+                    <p><strong>کدپستی:</strong> {{ user.customer_profile.postal_code }}</p>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

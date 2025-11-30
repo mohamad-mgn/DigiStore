@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}ایجاد / ویرایش فروشگاه — دیجی‌استور{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-7">
+
+        <!-- Page header section -->
+        <!-- Displays the title box for the store creation/edit page -->
+        <div class="mb-4 p-3 rounded text-white"
+             style="background: var(--navy); border-radius:14px; box-shadow: var(--shadow-1);">
+            <h4 class="fw-bold mb-0 text-center">ایجاد / ویرایش فروشگاه</h4>
+        </div>
+
+        <!-- Store form container -->
+        <!-- Card component holding the store form -->
+        <div class="card shadow-sm border-0" style="border-radius:14px;">
+            <div class="card-body p-4">
+
+                <!-- Store create/edit form -->
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Store name field -->
+                    <div class="mb-3">
+                        {{ form.store_name.label_tag }}
+                        {{ form.store_name }}
+                    </div>
+
+                    <!-- Store description field -->
+                    <div class="mb-3">
+                        {{ form.description.label_tag }}
+                        {{ form.description }}
+                    </div>
+
+                    <!-- National ID field -->
+                    <div class="mb-3">
+                        {{ form.national_id.label_tag }}
+                        {{ form.national_id }}
+                    </div>
+
+                    <!-- Secondary phone field -->
+                    <div class="mb-3">
+                        {{ form.phone_secondary.label_tag }}
+                        {{ form.phone_secondary }}
+                    </div>
+
+                    <!-- Submit button -->
+                    <button class="btn btn-success px-4">ذخیره</button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

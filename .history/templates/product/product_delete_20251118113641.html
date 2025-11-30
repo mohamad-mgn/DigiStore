@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="alert alert-warning">
+  آیا از حذف محصول "{{ object.title }}" مطمئن هستید؟
+</div>
+<form method="post">{% csrf_token %}<button class="btn btn-danger">حذف</button> <a class="btn btn-secondary" href="{% url 'product:detail' object.id %}">انصراف</a></form>
+{% endblock %}

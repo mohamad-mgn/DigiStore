@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DigiStore</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="{% url 'product:product_list' %}">محصولات</a> |
+      <a href="{% url 'cart:cart_detail' %}">سبد خرید</a> |
+      {% if user.is_authenticated %}
+        <a href="{% url 'account:profile' %}">پروفایل</a> |
+        <a href="{% url 'account:signout' %}">خروج</a>
+      {% else %}
+        <a href="{% url 'account:signin' %}">ورود</a> |
+        <a href="{% url 'account:send_otp' %}">ثبت‌نام/ورود با شماره</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% if messages %}
+    <ul>
+      {% for m in messages %}
+        <li>{{ m }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>© DigiStore</p>
+  </footer>
+</body>
+</html>

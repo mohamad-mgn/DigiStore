@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}ورود | دیجی‌استور{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+
+        <!-- Card container for login -->
+        <div class="card shadow-sm border-0" style="border-radius:14px;">
+            <div class="card-body p-4">
+
+                <!-- Heading -->
+                <h4 class="fw-bold mb-3 text-primary">ورود</h4>
+
+                <!-- Login form using phone -->
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Phone number input -->
+                    <div class="mb-3">
+                        {{ form.phone.label_tag }}
+                        {{ form.phone }}
+                    </div>
+
+                    <!-- Submit button -->
+                    <button class="btn btn-primary w-100">ارسال کد ورود</button>
+
+                    <!-- Link to send OTP for signup -->
+                    <div class="mt-2 text-center">
+                        <a href="{% url 'account:send_otp' %}" class="text-decoration-none">
+                            ثبت‌نام
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

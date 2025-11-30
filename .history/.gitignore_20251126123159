@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.egg
+*.log
+*.sqlite3
+*.db
+
+# Virtual environment
+.venv/
+venv/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.AppleDB
+.idea/
+.vscode/
+
+# Django files
+media/
+staticfiles/
+static_root/
+static/
+
+# Environment variables
+.env
+*.env
+
+# Byte-compiled / temporary files
+*.tmp
+*.temp
+*.swp
+
+# pytest / coverage files (if added in the future)
+htmlcov/
+.coverage
+.pytest_cache/
+
+# Django migrations
+*/migrations/*.py
+!*/migrations/__init__.py
+.history/

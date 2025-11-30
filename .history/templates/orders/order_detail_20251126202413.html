@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}سفارش #{{ order.id }} — دیجی‌استور{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- سایدبار -->
+    <div class="col-lg-3 mb-4">
+        <div class="card shadow-sm border-0" style="border-radius:14px;">
+            <div class="card-body">
+                <h6 class="fw-bold mb-3 text-primary">جزئیات سفارش</h6>
+                <p class="text-muted small">
+                    مشاهده اطلاعات کامل سفارش
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- محتوای اصلی -->
+    <div class="col-lg-9">
+
+        <!-- تیتر بخش -->
+        <div class="mb-4 p-3 rounded"
+             style="background:var(--navy); color:white; border-radius:14px; box-shadow:var(--shadow-1);">
+            <h4 class="fw-bold mb-0">سفارش #{{ order.id }}</h4>
+        </div>
+
+        <div class="card shadow-sm border-0 p-4" style="border-radius:14px;">
+
+            <!-- وضعیت -->
+            <p class="fw-bold mb-3">
+                وضعیت:
+                
+                {% if order.status == 'pending' %}
+                    <span class="badge bg-warning text-dark">
+                        <i class="bi bi-clock-fill"></i> در انتظار
+                    </span>
+                {% elif order.status == 'processing' %}
+                    <span class="badge bg-info text-dark">
+                        <i class="bi bi-gear-fill"></i> در حال پردازش
+                    </span>
+                {% elif order.status == 'shipped' %}
+                    <span class="badge bg-primary">
+                        <i class="bi bi-truck"></i> ارسال شده
+                    </span>
+                {% elif order.status == 'delivered' %}
+                    <span class="badge bg-success">
+                        <i class="bi bi-check-circle-fill"></i> تحویل داده شده
+                    </span>
+                {% elif order.status == 'cancelled' %}
+                    <span class="badge bg-danger">
+                        <i class="bi bi-x-circle-fill"></i> لغو شده
+                    </span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ order.get_status_display }}</span>
+                {% endif %}
+            </p>
+
+            <!-- جدول آیتم‌ها -->
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>محصول</th>
+                        <th>قیمت</th>
+                        <th>تعداد</th>
+                        <th>جمع</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for it in order.items.all %}
+                    <tr>
+                        <td class="fw-bold">{{ it.product.title }}</td>
+                        <td>{{ it.unit_price|intcomma }} تومان</td>
+                        <td>{{ it.quantity }}</td>
+                        <td class="fw-bold text-success">{{ it.total_price|intcomma }} تومان</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <hr>
+
+            <p class="fs-5 fw-bold text-end">
+                مجموع قابل پرداخت:
+                <span class="text-primary">{{ order.total_amount|intcomma }}</span>
+                تومان
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

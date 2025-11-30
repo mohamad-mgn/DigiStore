@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}ورود - دیجی‌استور{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">ورود</h5>
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ form.phone.label_tag }}
+            {{ form.phone }}
+          </div>
+          <button class="btn btn-primary">ارسال کد ورود</button>
+          <a class="btn btn-link" href="{% url 'account:send_otp' %}">ثبت‌نام / ارسال کد</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

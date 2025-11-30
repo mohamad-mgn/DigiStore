@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}سبد خرید{% endblock %}
+
+{% block content %}
+
+<!-- ⭐ هدر صفحه -->
+<div class="mb-4 p-3 rounded"
+     style="background: var(--navy); color:white; box-shadow: var(--shadow-1); border-radius:14px;">
+    <h4 class="fw-bold mb-0">سبد خرید شما</h4>
+</div>
+
+{% if cart.items.count %}
+
+<div class="card shadow-sm border-0" style="border-radius:14px;">
+    <div class="card-body p-0">
+
+        <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>محصول</th>
+                    <th>قیمت</th>
+                    <th style="width:140px;">تعداد</th>
+                    <th>جمع</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for item in items %}
+            <tr>
+
+                <!-- ⭐ ستون محصول -->
+                <td>
+                    <div class="d-flex align-items-center gap-2">
+
+                        <!-- تصویر محصول -->
+                        {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}"
+                             class="rounded"
+                             style="width:60px; height:60px; object-fit:cover;">
+                        {% else %}
+                        <img src="{% static 'images/placeholder.png' %}"
+                             class="rounded"
+                             style="width:60px; height:60px; object-fit:cover;">
+                        {% endif %}
+
+                        <!-- نام محصول -->
+                        <a href="{{ item.product.get_absolute_url }}"
+                           class="fw-bold text-dark text-decoration-none">
+                            {{ item.product.title }}
+                        </a>
+                    </div>
+                </td>
+
+                <!-- ⭐ قیمت -->
+                <td class="fw-bold">
+                    {{ item.product.price|intcomma }} تومان
+                </td>
+
+                <!-- ⭐ فرم تعداد -->
+                <td>
+                    <form method="post" action="{% url 'cart:update' item.id %}"
+                          class="d-flex align-items-center gap-2">
+                        {% csrf_token %}
+                        <input type="number"
+                               name="quantity"
+                               value="{{ item.quantity }}"
+                               min="1"
+                               class="form-control"
+                               style="width:70px;">
+                        <button class="btn btn-sm btn-primary">ثبت</button>
+                    </form>
+                </td>
+
+                <!-- ⭐ جمع -->
+                <td class="fw-bold">
+                    {{ item.total_price|intcomma }} تومان
+                </td>
+
+                <!-- ⭐ حذف -->
+                <td>
+                    <form method="post" action="{% url 'cart:remove' item.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-sm btn-danger">حذف</button>
+                    </form>
+                </td>
+
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<!-- ⭐ بخش جمع کل + دکمه‌ها -->
+<div class="d-flex justify-content-between align-items-center mt-4 p-3 bg-white shadow-sm rounded"
+     style="border-radius:14px;">
+
+    <h5 class="fw-bold mb-0">
+        جمع کل:
+        <span class="text-primary">{{ cart.total_price|intcomma }}</span>
+        تومان
+    </h5>
+
+    <div class="d-flex gap-2">
+
+        <form method="post" action="{% url 'cart:clear' %}">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger">خالی کردن سبد</button>
+        </form>
+
+        <a href="{% url 'orders:checkout' %}" class="btn btn-success">
+            نهایی کردن سفارش
+        </a>
+
+    </div>
+</div>
+
+{% else %}
+
+<!-- ⭐ سبد خالی -->
+<div class="text-center p-5 bg-white shadow-sm rounded"
+     style="border-radius:14px;">
+    <img src="{% static 'images/empty-cart.png' %}"
+         style="width:120px; opacity:0.7;" class="mb-3">
+    <h5 class="fw-bold">سبد خرید خالی است</h5>
+    <p class="text-muted">محصولات جذاب زیادی منتظر شما هستند 🙂</p>
+
+    <a href="{% url 'product:list' %}" class="btn btn-primary mt-3">
+        مشاهده محصولات
+    </a>
+</div>
+
+{% endif %}
+
+{% endblock %}

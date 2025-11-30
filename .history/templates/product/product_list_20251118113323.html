@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}محصولات — دیجی‌استور{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4>محصولات</h4>
+  {% if request.user.is_authenticated and request.user.is_seller %}
+    <a class="btn btn-sm btn-primary" href="{% url 'product:create' %}">ایجاد محصول</a>
+  {% endif %}
+</div>
+
+<div class="row">
+  {% for p in products %}
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card h-100">
+      <img src="{{ p.image.url if p.image else static('images/placeholder.png') }}" class="card-img-top" style="height:180px; object-fit:cover;">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ p.title }}</h5>
+        <p class="card-text small text-muted mb-2">{{ p.store.store_name }}</p>
+        <div class="mt-auto d-flex justify-content-between align-items-center">
+          <a href="{{ p.get_absolute_url }}" class="btn btn-outline-primary btn-sm">مشاهده</a>
+          <span class="fw-bold">{{ p.price|intcomma }} تومان</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">محصولی موجود نیست.</div>
+  {% endfor %}
+</div>
+
+<nav aria-label="Page navigation">
+  {% if is_paginated %}
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">قبلی</a></li>
+      {% endif %}
+      <li class="page-item disabled"><span class="page-link">صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}</span></li>
+      {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">بعدی</a></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+</nav>
+{% endblock %}
