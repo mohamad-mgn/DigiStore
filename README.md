@@ -5,7 +5,7 @@ Modern E-Commerce Web Application (Laptops, Mobiles, Tablets)
 DigiStore is a modern and fully-featured Django-based e-commerce platform designed for selling laptops, mobile phones, and tablets.
 It includes a powerful product system, shopping cart, payments, seller dashboard, authentication via phone OTP, and a minimal modern UI.
 
-⸻
+---
 
 ## 📌 Features
 
@@ -51,7 +51,7 @@ It includes a powerful product system, shopping cart, payments, seller dashboard
 	•	Class-based views
 	•	Static & media handling
 
-⸻
+---
 
 ## 📁 Project Structure
 
@@ -86,7 +86,7 @@ It includes a powerful product system, shopping cart, payments, seller dashboard
     │
     └── manage.py
 
-⸻
+---
 
 ## ⚙️ Installation & Setup
 
@@ -117,7 +117,7 @@ It includes a powerful product system, shopping cart, payments, seller dashboard
 
     python manage.py runserver
 
-⸻
+---
 
 ## 🧪 Testing Login & OTP
 
@@ -128,7 +128,7 @@ Flow:
 	2.	Receive OTP (mocked, shown in console)
 	3.	Login instantly without password
 
-⸻
+---
 
 ## 🧾 URL Structure
 
@@ -144,7 +144,7 @@ Flow:
 | Dashboard (seller)   | /dashboard/seller/       |
 | Payment mock page    | /payments/mock-pay/<id>/ |
 
-⸻
+---
 
 ## 🛠️ Future Improvements
 	•	Real payment gateway (ZarinPal / Stripe)
@@ -154,7 +154,7 @@ Flow:
 	•	React or Vue frontend
 	•	Docker deployment
 
-⸻
+---
 
 ## 📸 Screenshots (Optional)
 
@@ -163,14 +163,14 @@ You can add images like this:
     ![Home Page](static/images/banner.png)
     ![Navbar](static/images/logo.png)
 
-⸻
+---
 
 ## 🧑‍💻 Author
 
 Mohammad Moghanloo
 DigiStore Project — 2025
 
-⸻
+---
 
 ## ⭐ Contribution
 
