@@ -14,7 +14,7 @@
       <span class="fw-bold fs-4">دیجی‌استور</span>
     </a>
 
-    <!-- Mobile Toggler -->
+    <!-- Mobile Toggler Button -->
     <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,7 +30,7 @@
         ============================= -->
         <ul class="navbar-nav gap-3 mb-2 mb-lg-0">
 
-          <!-- Products Link -->
+          <!-- Products page -->
           <li class="nav-item">
             <a class="nav-link text-white-50 hover-white" href="{% url 'product:list' %}">
               محصولات
@@ -43,6 +43,7 @@
               درباره ما
             </a>
           </li>
+
         </ul>
 
         <!-- ============================
@@ -52,36 +53,36 @@
 
           <!-- ============================
                CART BUTTON
-               - Turns yellow when cart not empty
-               - Shows item count badge
+               Uses cart_count from context_processor
+               - If cart_count > 0 → yellow button + badge
+               - If empty → outline button
           ============================= -->
           <li class="nav-item position-relative">
 
             <a class="btn 
-                {% if request.user.is_authenticated and request.user.cart.items.count %}
-                    btn-warning     <!-- Cart has items -->
+                {% if cart_count > 0 %}
+                    btn-warning       {# Highlight when items exist #}
                 {% else %}
-                    btn-outline-light  <!-- Cart empty -->
+                    btn-outline-light {# Normal when empty #}
                 {% endif %}
                 px-3"
                href="{% url 'cart:detail' %}">
-               
+
               <!-- Cart Icon -->
               <i class="bi bi-cart3"></i>
 
-              {% if request.user.is_authenticated and request.user.cart.items.count %}
-              <!-- Red Badge showing item count -->
+              {% if cart_count > 0 %}
+              <!-- Red badge showing total items -->
               <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
-                {{ request.user.cart.items.count }}
+                {{ cart_count }}
               </span>
               {% endif %}
-
             </a>
           </li>
 
           {% if request.user.is_authenticated %}
 
-          <!-- User Dashboard -->
+          <!-- Dashboard -->
           <li class="nav-item">
             <a class="nav-link text-white-50 hover-white" href="{% url 'dashboard:customer' %}">
               داشبورد
@@ -120,14 +121,14 @@
   </div>
 </nav>
 
-<!-- Extra navbar styling -->
+<!-- Extra styling -->
 <style>
-  /* Smooth white hover on nav links */
+  /* White hover */
   .hover-white:hover {
-    color: #ffffff !important;
+    color: #fff !important;
   }
 
-  /* Push page content down (navbar is fixed) */
+  /* Push content down because navbar is fixed */
   body {
     padding-top: 80px;
   }
