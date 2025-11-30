@@ -32,11 +32,23 @@ class AddToCartView(View):
         cart = get_or_create_cart(request)
         product = get_object_or_404(Product, id=product_id)
 
-        item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        # ❗ Prevent adding more than available stock
+        existing_item = CartItem.objects.filter(cart=cart, product=product).first()
 
-        if not created:
-            item.quantity += 1
-            item.save()
+        if existing_item:
+            if existing_item.quantity >= product.stock:
+                messages.error(request, "موجودی محصول کافی نیست.")
+                return redirect("cart:detail")
+
+            existing_item.quantity += 1
+            existing_item.save()
+
+        else:
+            if product.stock < 1:
+                messages.error(request, "این محصول در حال حاضر ناموجود است.")
+                return redirect("product:list")
+
+            CartItem.objects.create(cart=cart, product=product, quantity=1)
 
         messages.success(request, "محصول به سبد خرید اضافه شد.")
         return redirect("cart:detail")

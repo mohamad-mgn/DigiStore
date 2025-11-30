@@ -107,3 +107,22 @@ class ProductDetailView(DetailView):
             category=self.object.category
         ).exclude(id=self.object.id)[:4]
         return ctx
+    
+
+class ProductSearchView(ListView):
+    # Search products by title or description.
+    model = Product
+    template_name = "product/product_search_results.html"
+    context_object_name = "products"
+
+    def get_queryset(self):
+        # Return products that contain the search query.
+        # Uses __icontains for case-insensitive matching.
+        query = self.request.GET.get("q", "")
+        return Product.objects.filter(title__icontains=query).select_related("category", "store")
+    
+    def get_context_data(self, **kwargs):
+        # Pass the search query to the template so it can be displayed in results.
+        context = super().get_context_data(**kwargs)
+        context["query"] = self.request.GET.get("q", "")
+        return context

@@ -32,7 +32,7 @@
 
             <!-- Store Name -->
             <p class="text-muted mb-2">
-                فروشنده: {# Seller: #}
+                فروشنده:
                 <strong>{{ product.store.store_name }}</strong>
             </p>
 
@@ -48,17 +48,24 @@
 
             <!-- Action Buttons -->
             <form method="post" action="{% url 'cart:add' product.id %}" class="mt-3">
-                {% csrf_token %} {# CSRF Token for security #}
+                {% csrf_token %}
 
-                <!-- Add to Cart Button -->
-                <button class="btn btn-primary px-4 fw-bold">
-                    افزودن به سبد خرید
-                </button>
+                {% if product.stock > 0 %}
+                    <!-- Add to Cart Button -->
+                    <button class="btn btn-primary px-4 fw-bold w-100">
+                        افزودن به سبد خرید
+                    </button>
+                {% else %}
+                    <!-- Disabled Button -->
+                    <button class="btn btn-secondary px-4 fw-bold w-100" disabled>
+                        ناموجود
+                    </button>
+                {% endif %}
 
                 <!-- Edit Product Button for Seller -->
                 {% if request.user.is_authenticated and request.user.is_seller and request.user == product.store.seller %}
                     <a href="{% url 'product:update' product.id %}"
-                       class="btn btn-outline-secondary px-4 fw-bold ms-2">
+                       class="btn btn-outline-secondary px-4 fw-bold mt-2">
                         ویرایش محصول
                     </a>
                 {% endif %}

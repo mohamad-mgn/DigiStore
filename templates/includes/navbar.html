@@ -14,9 +14,9 @@
       <span class="fw-bold fs-4">دیجی‌استور</span>
     </a>
 
-    <!-- Mobile Toggler Button -->
+    <!-- Mobile Toggler -->
     <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-        <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- ============================
@@ -28,51 +28,71 @@
         <!-- ============================
              RIGHT MENU (Products + About)
         ============================= -->
-        <ul class="navbar-nav gap-3 mb-2 mb-lg-0">
+        <ul class="navbar-nav gap-3 mb-3 mb-lg-0">
 
-          <!-- Products page -->
+          <!-- Products -->
           <li class="nav-item">
-            <a class="nav-link text-white-50 hover-white" href="{% url 'product:list' %}">
-              محصولات
-            </a>
+            <a class="nav-link text-white-50 hover-white" href="{% url 'product:list' %}">محصولات</a>
           </li>
 
-          <!-- About Us -->
+          <!-- About -->
           <li class="nav-item">
-            <a class="nav-link text-white-50 hover-white" href="{% url 'home:about' %}">
-              درباره ما
-            </a>
+            <a class="nav-link text-white-50 hover-white" href="{% url 'home:about' %}">درباره ما</a>
           </li>
 
         </ul>
 
         <!-- ============================
-             LEFT MENU (Cart + Auth)
+             SEARCH + CART + AUTH
         ============================= -->
         <ul class="navbar-nav gap-3 align-items-center">
 
           <!-- ============================
+               SEARCH BAR
+               Appears left of cart button
+          ============================= -->
+          <li class="nav-item d-none d-lg-block">
+            <form method="get" action="{% url 'product:search' %}" class="d-flex">
+              <input type="text" name="q"
+                     class="form-control form-control-sm"
+                     placeholder="جستجوی محصول..."
+                     style="width:220px; border-radius:8px;">
+              <button class="btn btn-primary btn-sm ms-2">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+          </li>
+
+          <!-- Search bar for mobile -->
+          <li class="nav-item d-lg-none mb-3">
+            <form method="get" action="{% url 'product:search' %}" class="d-flex">
+              <input type="text" name="q"
+                     class="form-control"
+                     placeholder="جستجوی محصول..."
+                     style="border-radius:8px;">
+              <button class="btn btn-primary ms-2">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+          </li>
+
+          <!-- ============================
                CART BUTTON
                Uses cart_count from context_processor
-               - If cart_count > 0 → yellow button + badge
-               - If empty → outline button
           ============================= -->
           <li class="nav-item position-relative">
-
             <a class="btn 
                 {% if cart_count > 0 %}
-                    btn-warning       {# Highlight when items exist #}
+                    btn-warning
                 {% else %}
-                    btn-outline-light {# Normal when empty #}
+                    btn-outline-light
                 {% endif %}
                 px-3"
                href="{% url 'cart:detail' %}">
 
-              <!-- Cart Icon -->
               <i class="bi bi-cart3"></i>
 
               {% if cart_count > 0 %}
-              <!-- Red badge showing total items -->
               <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
                 {{ cart_count }}
               </span>
@@ -91,25 +111,19 @@
 
           <!-- Logout -->
           <li class="nav-item">
-            <a class="btn btn-danger btn-sm" href="{% url 'account:signout' %}">
-              خروج
-            </a>
+            <a class="btn btn-danger btn-sm" href="{% url 'account:signout' %}">خروج</a>
           </li>
 
           {% else %}
 
           <!-- Login -->
           <li class="nav-item">
-            <a class="btn btn-primary btn-sm px-3" href="{% url 'account:signin' %}">
-              ورود
-            </a>
+            <a class="btn btn-primary btn-sm px-3" href="{% url 'account:signin' %}">ورود</a>
           </li>
 
           <!-- Signup -->
           <li class="nav-item">
-            <a class="btn btn-outline-light btn-sm px-3" href="{% url 'account:send_otp' %}">
-              ثبت‌نام
-            </a>
+            <a class="btn btn-outline-light btn-sm px-3" href="{% url 'account:send_otp' %}">ثبت‌نام</a>
           </li>
 
           {% endif %}
@@ -121,14 +135,13 @@
   </div>
 </nav>
 
-<!-- Extra styling -->
+<!-- ============================
+     EXTRA STYLES
+============================= -->
 <style>
-  /* White hover */
   .hover-white:hover {
     color: #fff !important;
   }
-
-  /* Push content down because navbar is fixed */
   body {
     padding-top: 80px;
   }

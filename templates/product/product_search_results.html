@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}جستجو: {{ query }}{% endblock %}
+
+{% block content %}
+
+<div class="mb-4 p-3 rounded"
+     style="background: var(--navy); color:white; border-radius:14px;">
+    <h4 class="fw-bold mb-0">
+        نتایج جستجو برای "{{ query }}"
+    </h4>
+</div>
+
+{% if products %}
+<div class="row">
+
+    {% for p in products %}
+    <div class="col-md-4 mb-4">
+
+        <div class="product-card">
+
+            <!-- Product image -->
+            <img src="{{ p.image.url }}"
+                 class="product-img"
+                 alt="{{ p.title }}">
+
+            <div class="p-3">
+                <h6 class="fw-bold">{{ p.title }}</h6>
+                <p class="text-muted">{{ p.price|intcomma }} تومان</p>
+
+                <a href="{{ p.get_absolute_url }}" class="btn btn-primary w-100">
+                    مشاهده محصول
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<!-- No results -->
+<div class="text-center p-5 bg-white shadow-sm rounded"
+     style="border-radius:14px;">
+    <img src="{% static 'images/empty-search.png' %}"
+         style="width:120px; opacity:0.7;" class="mb-3">
+    <h5 class="fw-bold">هیچ محصولی پیدا نشد</h5>
+    <p class="text-muted">عبارت جستجو را تغییر دهید.</p>
+
+    <a href="{% url 'product:list' %}" class="btn btn-primary mt-3">
+        مشاهده همه محصولات
+    </a>
+</div>
+
+{% endif %}
+
+{% endblock %}

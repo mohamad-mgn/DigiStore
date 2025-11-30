@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    ProductListView, ProductDetailView,
+    ProductListView, ProductDetailView, ProductSearchView,
     ProductCreateView, ProductUpdateView, ProductDeleteView
 )
 
@@ -17,7 +17,7 @@ urlpatterns = [
     path("category/<slug:slug>/", ProductListView.as_view(), name="category"),
 
     # Product search page
-    path("search/", ProductListView.as_view(), name="search"),
+    path("search/", ProductSearchView.as_view(), name="search"),
 
     # Seller creates a new product
     path("seller/create/", ProductCreateView.as_view(), name="create"),

@@ -43,6 +43,10 @@ class OrderService:
 
         if not items:
             raise ValueError("سبد خرید خالی است.")  # Cart is empty
+        
+        for it in items:
+            if it.product.stock < it.quantity:
+                raise ValueError(f"موجودی کافی برای '{it.product.title}' وجود ندارد.")
 
         # Calculate total price
         total = sum(item.product.price * item.quantity for item in items)
