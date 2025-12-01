@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (
     CustomerDashboardView,
-    SellerDashboardView
+    SellerDashboardView,
+    SellerStockView
 )
 
 # --------------------------------------------------------
@@ -18,4 +19,7 @@ urlpatterns = [
 
     # Dashboard for sellers
     path("seller/", SellerDashboardView.as_view(), name="seller"),
+
+    # Product's stock for sellers
+    path("stock/", SellerStockView.as_view(), name="seller_stock"),
 ]

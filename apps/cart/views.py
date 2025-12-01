@@ -26,30 +26,54 @@ class CartView(TemplateView):
 
 class AddToCartView(View):
     """
-    Add a product to the cart or increase its quantity if it already exists.
+    Add a product to the user's cart.
+    - If item exists → increase quantity (only if stock allows)
+    - If item doesn't exist → create new CartItem
+    - Prevent exceeding available product stock
     """
+
     def post(self, request, product_id):
+
+        # Fetch user's cart or create one
         cart = get_or_create_cart(request)
+
+        # Fetch product or return 404
         product = get_object_or_404(Product, id=product_id)
 
-        # ❗ Prevent adding more than available stock
+        # Try to find an existing cart item for this product
         existing_item = CartItem.objects.filter(cart=cart, product=product).first()
 
+        # --------------------------------------------
+        # Case 1: Product already exists in the cart
+        # --------------------------------------------
         if existing_item:
+
+            # Prevent increasing beyond available stock
             if existing_item.quantity >= product.stock:
                 messages.error(request, "موجودی محصول کافی نیست.")
                 return redirect("cart:detail")
 
+            # Increase quantity by 1
             existing_item.quantity += 1
             existing_item.save()
 
+        # --------------------------------------------
+        # Case 2: Product NOT in cart yet
+        # --------------------------------------------
         else:
+            # Product is out of stock
             if product.stock < 1:
                 messages.error(request, "این محصول در حال حاضر ناموجود است.")
                 return redirect("product:list")
 
-            CartItem.objects.create(cart=cart, product=product, quantity=1)
+            # Create cart item
+            CartItem.objects.create(
+                cart=cart,
+                product=product,
+                quantity=1
+            )
 
+        # Success message
         messages.success(request, "محصول به سبد خرید اضافه شد.")
         return redirect("cart:detail")
 
@@ -74,6 +98,10 @@ class UpdateCartItemView(View):
         cart = get_or_create_cart(request)
         item = get_object_or_404(CartItem, id=item_id, cart=cart)
         qty = int(request.POST.get("quantity", 1))
+
+        if qty > item.product.stock:
+            messages.error(request, "موجودی کالا کمتر از این مقدار است.")
+            return redirect("cart:detail")
 
         if qty <= 0:
             item.delete()

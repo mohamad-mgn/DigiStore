@@ -1,6 +1,8 @@
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
+from django.contrib import messages
+from django.views import View
 
 from apps.orders.models import Order, OrderItem
 from apps.product.models import Product
@@ -82,3 +84,33 @@ class SellerDashboardView(LoginRequiredMixin, TemplateView):
             ctx["orders"] = []
 
         return ctx
+
+class SellerStockView(View):
+    """
+    Show and edit stock for seller products.
+    """
+
+    def get(self, request):
+        products = Product.objects.filter(store__owner=request.user)
+        return render(request, "dashboard/seller_stock.html", {
+            "products": products
+        })
+
+    def post(self, request):
+        product_id = request.POST.get("product_id")
+        stock = request.POST.get("stock")
+
+        product = Product.objects.filter(
+            id=product_id,
+            store__owner=request.user
+        ).first()
+
+        if not product:
+            messages.error(request, "محصول یافت نشد.")
+            return redirect("dashboard:seller_stock")
+
+        product.stock = int(stock)
+        product.save(update_fields=["stock"])
+
+        messages.success(request, "موجودی با موفقیت بروزرسانی شد.")
+        return redirect("dashboard:seller_stock")

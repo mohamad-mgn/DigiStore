@@ -44,6 +44,14 @@
                                 {{ p.price|intcomma }} تومان
                             </span>
                         </div>
+
+                        <!-- STOCK BADGE -->
+                        {% if p.stock > 0 %}
+                            <span class="badge bg-success mt-2">موجود: {{ p.stock }}</span>
+                        {% else %}
+                            <span class="badge bg-danger mt-2">ناموجود</span>
+                        {% endif %}
+
                     </div>
                 </div>
 

@@ -44,6 +44,7 @@ class OrderService:
         if not items:
             raise ValueError("سبد خرید خالی است.")  # Cart is empty
         
+         # 1) Check inventory before creating the order
         for it in items:
             if it.product.stock < it.quantity:
                 raise ValueError(f"موجودی کافی برای '{it.product.title}' وجود ندارد.")
@@ -70,12 +71,9 @@ class OrderService:
                 quantity=it.quantity
             ))
 
-            # Deduct product stock
-            if it.product.stock >= it.quantity:
-                it.product.stock -= it.quantity
-                it.product.save(update_fields=['stock'])
-            else:
-                raise ValueError(f"موجودی کافی برای {it.product.title} وجود ندارد.")  # Insufficient stock
+            # 2) Deduct stock (safe because we've already checked)
+            it.product.stock -= it.quantity
+            it.product.save(update_fields=['stock'])
 
         # Bulk create order items
         OrderItem.objects.bulk_create(order_items)

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}سفارش‌های مشتریان{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="mb-4 p-3 rounded"
+     style="background: var(--navy); color:white; border-radius:14px;">
+    <h4 class="fw-bold mb-0">سفارش‌های مشتریان</h4>
+</div>
+
+{% if items %}
+<div class="card shadow-sm border-0" style="border-radius:14px;">
+    <div class="card-body p-0">
+
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>محصول</th>
+                    <th>تعداد</th>
+                    <th>قیمت واحد</th>
+                    <th>مجموع</th>
+                    <th>سفارش</th>
+                    <th>تاریخ</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for it in items %}
+            <tr>
+
+                <!-- Product title -->
+                <td class="fw-bold">
+                    {{ it.product.title }}
+                </td>
+
+                <!-- quantity -->
+                <td>× {{ it.quantity }}</td>
+
+                <!-- unit price -->
+                <td>{{ it.unit_price|intcomma }} تومان</td>
+
+                <!-- total -->
+                <td class="fw-bold text-primary">
+                    {{ it.total_price|intcomma }} تومان
+                </td>
+
+                <!-- order id -->
+                <td>#{{ it.order.id }}</td>
+
+                <!-- date -->
+                <td>{{ it.order.created_at|date:"Y/m/d" }}</td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+{% else %}
+
+<div class="alert alert-info text-center">
+    هنوز هیچ سفارشی برای محصولات شما ثبت نشده است.
+</div>
+
+{% endif %}
+
+{% endblock %}

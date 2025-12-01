@@ -66,3 +66,7 @@ class Product(models.Model):
     # URL for the product detail page
     def get_absolute_url(self):
         return reverse("product:detail", args=[str(self.id)])
+    
+    @property
+    def is_low_stock(self):
+        return self.stock <= 3 and self.stock > 0
