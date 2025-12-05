@@ -36,7 +36,7 @@ class Order(models.Model):
         default='pending'
     )
 
-    total_amount = models.PositiveIntegerField("مبلغ کل (تومان)", default=0)
+    total_amount = models.PositiveBigIntegerField("مبلغ کل (تومان)", default=0)
 
     created_at = models.DateTimeField("تاریخ ایجاد", default=timezone.now)
     updated_at = models.DateTimeField("آخرین تغییر", auto_now=True)
